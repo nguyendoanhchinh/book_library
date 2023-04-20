@@ -16,11 +16,11 @@ if ($action == 'updateBook') {
     $sotrang = $_POST['s_sotrang'];
     $soluong = $_POST['s_soluong'];
     $ngonngu = $_POST['s_ngonngu'];
-    // $tg_id=$_POST['s_tacgia'];
-    // $tl_id=$_POST['s_theloai'];
-    $sql = "UPDATE `sach` SET `s_ten`='$tensach',`s_gia`='$giasach',`s_giamgia`=' $sachgiamgia',`nxb`=' $nxb',
-    `namxuatban`=' $namxuatban',`sotrang`=' $sotrang',`soluong`='$soluong',`ngonngu`='$ngonngu',`tg_id`='$tg_id'
-    ,`tl_id`='$tl_id' WHERE `s_id`='$id'";
+    $tg_id = trim($_POST['s_tacgia']);
+    $tl_id = trim($_POST['s_theloai']);
+   
+    $sql = "UPDATE `sach` SET `s_ten`='$tensach',`s_gia`='$giasach',`s_giamgia`='$sachgiamgia',`nxb`='$nxb',
+    `namxuatban`='$namxuatban',`sotrang`='$sotrang',`soluong`='$soluong',`ngonngu`='$ngonngu',`tg_id`='$tg_id',`tl_id`='$tl_id' WHERE `s_id`='$id'";
     $query = mysqli_query($conn, $sql);
     if ($query) {
         echo "Sửa thành công";
@@ -60,7 +60,7 @@ if ($action == 'loadData') {
             <td><?php echo $row['tg_ten']; ?></td>
             <td><?php echo $row['tl_ten']; ?></td>
             <td>
-                <button type="button" id="display" class="btn btn-warning display" id_update="<?php echo $row['s_id']; ?>" s_giamgia="<?php echo $row['s_giamgia']; ?>" s_gia="<?php echo number_format($row['s_gia']); ?>" nxb="<?php echo $row['nxb']; ?>" namxuatban="<?php echo $row['namxuatban']; ?>" sotrang="<?php echo $row['sotrang'] ?>" soluong="<?php echo $row['soluong']; ?>" ngonngu="<?php echo $row['ngonngu']; ?>" data-bs-toggle="modal" data-bs-target="#displayModal">
+                <button type="button" class="btn btn-warning " id_update="<?php echo $row['s_id']; ?>" s_ten="<?php echo $row['s_ten']; ?>" s_gia="<?php echo $row['s_gia']; ?>" s_giamgia="<?php echo $row['s_giamgia']; ?>" nxb="<?php echo $row['nxb']; ?>" namxuatban="<?php echo $row['namxuatban']; ?>" sotrang="<?php echo $row['sotrang']; ?>" soluong="<?php echo $row['soluong']; ?>" ngonngu="<?php echo $row['ngonngu']; ?>" id="display" tacgia="<?php echo $row['tg_ten'] ?>" theloai="<?php echo $row['tl_ten'] ?>" data-bs-toggle="modal" data-bs-target="#displayModal">
                     Sửa
                 </button>
                 <button type="button" class="btn btn-danger" id="delete" id_delete="<?php echo $row['s_id']; ?>">
@@ -90,7 +90,7 @@ if ($action == 'loadData') {
         <?php
     }
 //danh sách sách
-if ($action == 'list_book') {
+    if ($action == 'list_book') {
         $id = $_POST['id'];
         $sql = "SELECT * from  sach INNER JOIN tacgia ON tacgia.tg_id = sach.tg_id
     INNER JOIN theloai ON sach.tl_id = theloai.tl_id   where s_id=$id ";
@@ -120,7 +120,7 @@ if ($action == 'list_book') {
             <td><?php echo $row['tg_ten']; ?></td>
             <td><?php echo $row['tl_ten']; ?></td>
             <td>
-                <button type="button" class="btn btn-warning" id="display" id_update="<?php echo $row['s_id']; ?>" giamgia="<?php echo $row['s_giamgia']; ?>" s_gia="<?php echo number_format($row['s_gia']); ?>" nxb="<?php echo $row['nxb']; ?>" namxuatban="<?php echo $row['namxuatban']; ?>" soluong="<?php echo $row['soluong']; ?>" ngonngu="<?php echo $row['ngonngu']; ?>" data-bs-toggle="modal" data-bs-target="#displayModal">
+                <button type="button" class="btn btn-warning " id_update="<?php echo $row['s_id']; ?>" s_ten="<?php echo $row['s_ten']; ?>" s_gia="<?php echo $row['s_gia']; ?>" s_giamgia="<?php echo $row['s_giamgia']; ?>" nxb="<?php echo $row['nxb']; ?>" namxuatban="<?php echo $row['namxuatban']; ?>" sotrang="<?php echo $row['sotrang']; ?>" soluong="<?php echo $row['soluong']; ?>" ngonngu="<?php echo $row['ngonngu']; ?>" id="display" tacgia="<?php echo $row['tg_ten'] ?>" theloai="<?php echo $row['tl_ten'] ?>" data-bs-toggle="modal" data-bs-target="#displayModal">
                     Sửa
                 </button>
                 <button type="button" class="btn btn-danger" id="delete" id_delete="<?php echo $row['s_id']; ?>">
@@ -132,7 +132,7 @@ if ($action == 'list_book') {
         <?php }
 
 // xóa dữ liệu sách
-if ($action == 'deleteBook') {
+    if ($action == 'deleteBook') {
         $id = $_POST['id'];
         $sql = "DELETE FROM `sach` WHERE s_id='$id'";
         $query = mysqli_query($conn, $sql);
@@ -143,25 +143,47 @@ if ($action == 'deleteBook') {
         }
     }
 //hiện thị danh sách tác giả
-if ($action == 'loadAuthor') {
-       //đếm tổng số sách của tác giả trong bảng sách cả tác giả không có quển sách nào
-        $sql="SELECT tacgia.tg_id, tacgia.tg_ten, COUNT(sach.tg_id) as tongsosach 
+    if ($action == 'loadAuthor') {
+        //đếm tổng số sách của tác giả trong bảng sách cả tác giả không có quển sách nào
+        $sql = "SELECT tacgia.tg_id, tacgia.tg_ten, COUNT(sach.tg_id) as tongsosach 
         FROM tacgia 
         LEFT JOIN sach ON sach.tg_id = tacgia.tg_id 
         GROUP BY tacgia.tg_id, tacgia.tg_ten";
-         $query = mysqli_query($conn, $sql);
-        $i=1;
+        $query = mysqli_query($conn, $sql);
+        $i = 1;
         while ($row = mysqli_fetch_assoc($query)) { ?>
         <tr>
             <td class="text-center"><?php echo $i++; ?></td>
             <td class="text-center"><?php echo $row['tg_ten']; ?></td>
             <td class="text-center"><?php echo $row['tongsosach']; ?></td>
-            <td style="text-align:center;" id="tbnSuaauthor" id_tacgia="<?php echo $row['tg_id']; ?>" ten_tacgia="<?php echo $row['tg_ten']; ?>" class="text-center"><button type="button" class="btn btn-warning text-center" data-bs-toggle="modal" data-bs-target="#suaModal">
+            <td style="text-align:center;" id="tbnSuaauthor" id_tacgia="<?php echo $row['tg_id']; ?>" ten_tacgia="<?php echo $row['tg_ten']; ?>" class="text-center"><button type="button" class="btn btn-warning text-center" data-bs-toggle="modal" data-bs-target="#modalAuthor">
                     Sửa tác giả
                 </button>
-                <button class="btn btn-danger " id_delete="<?php echo $row['tg_id']; ?>">Xóa</button>
+                <button class="btn btn-danger " id="deleteAuthor" id_deleteAuthor="<?php echo $row['tg_id']; ?>">Xóa</button>
             </td>
         </tr>
 <?php }
     }
-//thêm tác giả
+//sửa tác giả
+    if ($action == 'updateAuthor') {
+        $id = $_POST['id'];
+        $tentacgia = $_POST['tentacgia'];
+        $sql = "UPDATE tacgia set tg_ten='$tentacgia' where tg_id='$id'";
+        $query = mysqli_query($conn, $sql);
+        if ($query) {
+            echo "Sửa thành công";
+        } else {
+            echo "Sửa thất bại";
+        }
+    }
+//xóa tác giả
+    if ($action == 'deleteAuthor') {
+        $id = $_POST['id'];
+        $sql = "DELETE FROM `tacgia` WHERE tg_id='$id'";
+        $query = mysqli_query($conn, $sql);
+        if ($query) {
+            echo "Xóa thành công";
+        } else {
+            echo "Xóa thất bại";
+        }
+    }

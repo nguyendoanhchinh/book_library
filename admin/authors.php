@@ -28,7 +28,7 @@ session_start();
             <?php include "inc/sidebar.php"; ?>
         </div>
         <div id="layoutSidenav_content">
-            <div class="container">
+           
                 <main>
                     <div class="container-fluid px-4">
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -54,7 +54,7 @@ session_start();
                             </div>
                         </div>
                         <!-- Modal sửa -->
-                        <div class="modal fade" id="suaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="modalAuthor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -77,7 +77,7 @@ session_start();
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                        <button type="button" class="btn btn-primary" id="btnupdate">Sửa</button>
+                                        <button type="button" class="btn btn-primary" id="btnUpdateAuthor">Sửa</button>
                                     </div>
                                 </div>
                             </div>
@@ -87,14 +87,13 @@ session_start();
                             <button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Thêm tác giả
                             </button>
-                            <table class="table table-bordered mt-5">
+                            <table class="table  mt-5">
                                 <thead class="thead-dark">
                                     <tr >
                                         <th class="text-center">STT</th>
                                         <th class="text-center">Tên thể loại</th>
                                         <th class="text-center">Số lượng sách</th>
                                         <th class="text-center">Thao tác</th>
-                                    
                                     </tr>
                                 </thead>
                                 <tbody id="listAuthor">
@@ -105,7 +104,7 @@ session_start();
                     </div>
                 </main>
             </div>
-        </div>
+        
     </div>
     <script src="js/author.js"></script>
     <script src="js/category.js"></script>

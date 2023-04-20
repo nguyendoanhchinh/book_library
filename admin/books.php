@@ -167,16 +167,18 @@ session_start();
                                                 <div class="mb-3"><label for="sotrang" class="form-label">Số trang</label><input type="number" class="form-control" id="s_sotrang" name="s_sotrang"></div>
                                                 <div class="mb-3"><label for="soluong" class="form-label">Số lượng</label><input type="number" class="form-control" id="s_soluong" name="s_soluong"></div>
                                                 <div class="mb-3"><label for="ngonngu" class="form-label">Ngôn ngữ</label><input type="text" class="form-control" id="s_ngonngu" name="s_ngonngu"></div>
+
                                                 <div class="mb-3">
                                                     <label for="s_tacgia" class="form-label">Tác giả</label>
-                                                    <select id="s_tacgia" class="form-select" aria-label="Default select example">
-
+                                                    <select  id="s_tacgia" class="form-select" aria-label="Default select example">
                                                         <?php
-                                                        $sql = "select * from tacgia ";
+                                                        $sql = "select * from tacgia";
                                                         $query = mysqli_query($conn, $sql);
-                                                        while ($row = mysqli_fetch_assoc($query)) { ?>
-                                                            <option selected><?php echo $row['tg_ten'] ?></option>
-                                                        <?php }
+                                                        while ($row = mysqli_fetch_assoc($query)) {
+                                                        ?>
+                                                            <option id="s_tacgia" value="<?php echo $row['tg_id']; ?>"><?php echo $row['tg_ten'] ?></option>
+                                                        <?php
+                                                        }
                                                         ?>
                                                     </select>
                                                 </div>
@@ -184,13 +186,14 @@ session_start();
                                             <div class="mb-3">
                                                 <label for="s_theloai" class="form-label">Thể loại</label>
                                                 <select id="s_theloai" class="form-select" aria-label="Default select example">
-
                                                     <?php
-                                                    $sql = "select * from theloai ";
+                                                    $sql = "select * from theloai";
                                                     $query = mysqli_query($conn, $sql);
-                                                    while ($row = mysqli_fetch_assoc($query)) { ?>
-                                                        <option selected><?php echo $row['tl_ten'] ?></option>
-                                                    <?php }
+                                                    while ($row = mysqli_fetch_assoc($query)) {
+                                                    ?>
+                                                        <option value="<?php echo $row['tl_id'] ?>"><?php echo $row['tl_ten'] ?></option>
+                                                    <?php
+                                                    }
                                                     ?>
                                                 </select>
                                             </div>
@@ -261,7 +264,7 @@ session_start();
                                         <td><?php echo $row['tg_ten']; ?></td>
                                         <td><?php echo $row['tl_ten']; ?></td>
                                         <td>
-                                            <button type="button" class="btn btn-warning " id_update="<?php echo $row['s_id']; ?>" s_ten="<?php echo $row['s_ten']; ?>" s_gia="<?php echo $row['s_gia']; ?>" s_giamgia="<?php echo $row['s_giamgia']; ?>" nxb="<?php echo $row['nxb']; ?>" namxuatban="<?php echo $row['namxuatban']; ?>" sotrang="<?php echo $row['sotrang']; ?>" soluong="<?php echo $row['soluong']; ?>" ngonngu="<?php echo $row['ngonngu']; ?>" id="display" tacgia="<?php echo $row['tg_ten'] ?>" theloai="<?php echo $row['tl_ten'] ?>" data-bs-toggle="modal" data-bs-target="#displayModal">
+                                            <button type="button" class="btn btn-warning " id_update="<?php echo $row['s_id']; ?>" s_ten="<?php echo $row['s_ten']; ?>" s_gia="<?php echo $row['s_gia']; ?>" s_giamgia="<?php echo $row['s_giamgia']; ?>" nxb="<?php echo $row['nxb']; ?>" namxuatban="<?php echo $row['namxuatban']; ?>" sotrang="<?php echo $row['sotrang']; ?>" soluong="<?php echo $row['soluong']; ?>" ngonngu="<?php echo $row['ngonngu']; ?>" id="display" tacgia="<?php echo $row['tg_id'] ?>" theloai="<?php echo $row['tl_id'] ?>" data-bs-toggle="modal" data-bs-target="#displayModal">
                                                 Sửa
                                             </button>
                                             <button type="button" class="btn btn-danger" id="delete" id_delete="<?php echo $row['s_id']; ?>">

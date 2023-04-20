@@ -66,6 +66,7 @@ $(document).on('click', '#display', function() {
         var ngonngu = $(this).attr('ngonngu');
         var tacgia = $(this).attr('tacgia');
         var theloai = $(this).attr('theloai');
+
         $('#displayModal').modal('show');
         $('#hidden_id').val(id);
         $('#s_tensach').val(s_ten)
@@ -110,13 +111,13 @@ $(document).on('click', '#tbnSua', function() {
             s_sotrang: s_sotrang,
             s_soluong: s_soluong,
             s_ngonngu: s_ngonngu,
-            // s_tacgia: s_tacgia,
-            // s_theloai: s_theloai
+            s_tacgia: s_tacgia,
+            s_theloai: s_theloai
         },
 
         success: function(data) {
             location.reload();
-            $('#displayModal').modal('show');
+            $('#displayModal').modal('hide');
             alert(data);
         }
     });
