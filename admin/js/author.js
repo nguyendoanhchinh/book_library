@@ -1,5 +1,5 @@
 loadAuthor();
-
+//hien thi thong thong tin tac gia
 function loadAuthor() {
 
     var action = 'loadAuthor';
@@ -13,3 +13,15 @@ function loadAuthor() {
         }
     });
 }
+//hiển thị thông tin chi tiet tacgia 
+
+$(document).on('click', '#tbnSuaauthor', function() {
+
+    var id_tacgia = $(this).attr('id_tacgia');
+
+    var ten_tacgia = $(this).attr('ten_tacgia');
+    $('#suaModal').modal('show')
+    $('#idtacgia').val(id_tacgia);
+    $('#tentacgia').val(ten_tacgia);
+})
+$('')

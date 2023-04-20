@@ -77,7 +77,7 @@ session_start();
                                 <div class="card mb-2" style="width: 100%;">
                                     <div class="card-body" style="background: #CC3300;">
                                         <h5 class="card-title text-center">
-                                            <a href="" class="text-decoration-none text-white">Tác giả</a>
+                                            <a href="authors.php" class="text-decoration-none text-white">Tác giả</a>
                                         </h5>
 
                                         <?php

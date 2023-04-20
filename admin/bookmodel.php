@@ -156,7 +156,7 @@ if ($action == 'loadAuthor') {
             <td class="text-center"><?php echo $i++; ?></td>
             <td class="text-center"><?php echo $row['tg_ten']; ?></td>
             <td class="text-center"><?php echo $row['tongsosach']; ?></td>
-            <td style="text-align:center;" class="text-center"><button type="button" class="btn btn-warning text-center" data-bs-toggle="modal" data-bs-target="#suaModal">
+            <td style="text-align:center;" id="tbnSuaauthor" id_tacgia="<?php echo $row['tg_id']; ?>" ten_tacgia="<?php echo $row['tg_ten']; ?>" class="text-center"><button type="button" class="btn btn-warning text-center" data-bs-toggle="modal" data-bs-target="#suaModal">
                     Sửa tác giả
                 </button>
                 <button class="btn btn-danger " id_delete="<?php echo $row['tg_id']; ?>">Xóa</button>
@@ -165,4 +165,3 @@ if ($action == 'loadAuthor') {
 <?php }
     }
 //thêm tác giả
-
