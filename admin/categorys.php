@@ -1,7 +1,6 @@
 <?php 
     session_start();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,8 +33,6 @@
                 <div class="container-fluid px-4">
 
                     <h1 class="mt-4">Quản lý sản phẩm</h1>
-                   
-
                     <ol class="breadcrumb mb-4">
                         <a href="#"><button class="btn btn-success mt-3 mb-3">Thêm sản phẩm </button></a>
 
@@ -46,8 +43,7 @@
                                     <th scope="col">Tên thể loại</th>
                                     <th scope="col">Số lượng sách</th>
                                     <th scope="col">Thao tác</th>
-                                    
-
+                                
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,6 +76,7 @@
     <script src="assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
+    <script src="js/books.js"></script>
 </body>
 
 </html>

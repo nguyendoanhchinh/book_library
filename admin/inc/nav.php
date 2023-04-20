@@ -1,7 +1,7 @@
 <?php
 
 if (!isset($_SESSION['k_email'])) {
-    header('location:../../login.php');
+    header('location:../login.php');
 }
 include "../database/connect.php";
 

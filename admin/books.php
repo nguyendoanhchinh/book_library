@@ -13,13 +13,11 @@ session_start();
     <title>Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
-
 <body class="sb-nav-fixed">
     <?php include "inc/nav.php"; ?>
     <div id="layoutSidenav">
@@ -30,13 +28,8 @@ session_start();
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Danh sách sách</h1>
-
-
                 </div>
-
                 <div class="card-body">
-
-
                     <div class="card mb-10">
                         <!-- tìm kiếm  -->
                         <form action="" method="POST" class="mr-2 col-sm-2 p-4 ">
@@ -50,16 +43,11 @@ session_start();
                             </div>
                         </form>
                         <!--  -->
-
-
-
-
-                        <!-- Modal thêm  -->
-
+                        <!-- Modal thêm  sách-->
                         <button type="submit" class="btn btn-success col-sm-1 pb-2 m-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Thêm
                         </button>
-                        <!-- Modal -->
+
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog  modal-lg">
                                 <div class="modal-content">
@@ -92,8 +80,6 @@ session_start();
                                                     <input type="number" class="form-control" id="namxuatban">
                                                 </div>
                                             </div>
-
-
 
                                             <div class="mb-3">
                                                 <label for="mota" class="form-label">Mô tả</label>
@@ -158,55 +144,65 @@ session_start();
                                 </div>
                             </div>
                         </div>
-                        <!-- modal sửa  -->
-                        <div class="modal fade" id="displayModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <!-- modal sửa sách -->
+                        <div class="modal fade " id="displayModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog  modal-lg">
                                 <div class="modal-content">
-                                    <div class="bd-example">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Sửa sách</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
                                         <form>
-
-                                            <div class="form-row">
-                                                <input type="hidden" id="hidden_id">
-                                                <div class="form-group ">
-                                                    <label for="s_gia">Giá sách</label>
-                                                    <input type="text" class="form-control" id="s_gia" autocomplete="off">
+                                            <div class="mb-3"><label for="tensach" class="form-label">Tên sách</label><input type="text" class="form-control" id="s_tensach" name="s_tensach"></div>
+                                            <div class="d-flex">
+                                                <div class="mb-3"><label for="giasach" class="form-label">Gía sách</label><input type="number" class="form-control" id="s_giasach" name="s_giasach"></div>
+                                                <div class="mb-3"><label for="sachgiamgia" class="form-label">Giảm Gía</label><input type="number" class="form-control" id="s_sachgiamgia" name="s_sachgiamgia"></div>
+                                                <div class="mb-3"><label for="nxb" class="form-label">Nhà xuất bản</label><input type="text" class="form-control" id="s_nxb" name="s_nxb"></div>
+                                                <div class="mb-3"><label for="namxuatban" class="form-label">Năm xuất bản</label><input type="number" class="form-control" id="s_namxuatban" name="s_namxuatban"></div>
+                                            </div>
+                                            <input type="hidden" id="hidden_id" name="hidden_id"></input>
+                                            <div class="d-flex">
+                                                <div class="mb-3"><label for="sotrang" class="form-label">Số trang</label><input type="number" class="form-control" id="s_sotrang" name="s_sotrang"></div>
+                                                <div class="mb-3"><label for="soluong" class="form-label">Số lượng</label><input type="number" class="form-control" id="s_soluong" name="s_soluong"></div>
+                                                <div class="mb-3"><label for="ngonngu" class="form-label">Ngôn ngữ</label><input type="text" class="form-control" id="s_ngonngu" name="s_ngonngu"></div>
+                                                <div class="mb-3">
+                                                    <label for="s_tacgia"  class="form-label">Tác giả</label>
+                                                    <select id="s_tacgia" class="form-select" aria-label="Default select example">
+                                                        
+                                                        <?php
+                                                        $sql = "select * from tacgia ";
+                                                        $query = mysqli_query($conn, $sql);
+                                                        while ($row = mysqli_fetch_assoc($query)) { ?>
+                                                            <option selected ><?php echo $row['tg_ten'] ?></option>
+                                                        <?php }
+                                                        ?>
+                                                    </select>
                                                 </div>
-                                                <div class="form-group ">
-                                                    <label for="nxb">Nhà xuất bản</label>
-                                                    <input type="text" class="form-control" id="nxb" autocomplete="off">
-                                                </div>
                                             </div>
-                                            <div class="form-group ">
-                                                <label for="namxuatban">Năm xuất bản</label>
-                                                <input type="text" class="form-control" id="namxuatban" autocomplete="off">
+                                            <div class="mb-3">
+                                                <label for="s_theloai"   class="form-label">Thể loại</label>
+                                                <select id="s_theloai" class="form-select" aria-label="Default select example">
+                                                    
+                                                    <?php
+                                                    $sql = "select * from theloai ";
+                                                    $query = mysqli_query($conn, $sql);
+                                                    while ($row = mysqli_fetch_assoc($query)) { ?>
+                                                        <option selected   ><?php echo $row['tl_ten'] ?></option>
+                                                    <?php }
+                                                    ?>
+                                                </select>
                                             </div>
-                                            <div class="form-group ">
-                                                <label for="giamgia">Giảm giá sách</label>
-                                                <input type="text" class="form-control" id="giamgia" autocomplete="off">
-                                            </div>
-                                            <div class="form-group ">
-                                                <label for="soluong">Số lượng</label>
-                                                <input type="text" class="form-control" id="soluong" autocomplete="off">
-                                            </div>
-
-                                            <div class="form-row d-flex">
-                                                <div class="form-group ">
-                                                    <label for="ngonngu">Ngôn ngữ</label>
-                                                    <input type="text" class="form-control" id="ngonngu" autocomplete="off">
-                                                </div>
-
-                                            </div>
-
                                         </form>
                                     </div>
-
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                        <button type="button" class="btn btn-primary" id="btnupdate">Sửa</button>
+                                        <button type="button" class="btn btn-primary" id="tbnSua">Sửa</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="hidden_id"></div>
                         <table class="table align-middle mb-0 bg-white">
                             <thead class="bg-light">
                                 <tr>
@@ -242,22 +238,18 @@ session_start();
                                 INNER JOIN theloai ON sach.tl_id = theloai.tl_id limit  $start,$limit ";
                                 $query = mysqli_query($conn, $sql);
                                 while ($row = mysqli_fetch_assoc($query)) {
-
                                 ?>
-
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <img src="image/VanHoc/<?php echo $row['anh']; ?>" alt="" style="width: 55px; height: 55px" />
                                                 <div class="ms-3">
                                                     <p class="fw-bold mb-1"><?php echo $row['s_ten']; ?></p>
-
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <p class="fw-normal mb-1"><?php echo number_format($row['s_gia']); ?></p>
-
                                         </td>
                                         <td><?php echo $row['nxb']; ?></td>
                                         <td><?php echo $row['namxuatban']; ?></td>
@@ -268,10 +260,23 @@ session_start();
                                         <td><?php echo $row['tg_ten']; ?></td>
                                         <td><?php echo $row['tl_ten']; ?></td>
                                         <td>
-                                            <button type="button" class="btn btn-warning display" id_update="<?php echo $row['s_id']; ?>" giamgia="<?php echo $row['s_giamgia']; ?>" s_gia="<?php echo number_format($row['s_gia']); ?>" nxb="<?php echo $row['nxb']; ?>" namxuatban="<?php echo $row['namxuatban']; ?>" soluong="<?php echo $row['soluong']; ?>" ngonngu="<?php echo $row['ngonngu']; ?>" data-bs-toggle="modal" data-bs-target="#displayModal">
+                                            <button type="button" class="btn btn-warning " 
+                                            id_update="<?php  echo $row['s_id']; ?>"
+                                            s_ten="<?php  echo $row['s_ten']; ?>"
+                                            s_gia="<?php  echo $row['s_gia']; ?>"
+                                            s_giamgia="<?php  echo $row['s_giamgia']; ?>"
+                                            nxb="<?php  echo $row['nxb']; ?>"
+                                            namxuatban="<?php  echo $row['namxuatban']; ?>"
+                                            sotrang="<?php  echo $row['sotrang']; ?>"
+                                            soluong="<?php  echo $row['soluong']; ?>"
+                                            ngonngu="<?php  echo $row['ngonngu']; ?>"
+                                            id="display"
+                                            tacgia="<?php echo $row['tg_ten'] ?>"
+                                            theloai="<?php echo $row['tl_ten'] ?>"
+                                            data-bs-toggle="modal" data-bs-target="#displayModal">
                                                 Sửa
                                             </button>
-                                            <button type="button" class="btn btn-danger" id="delete" id_delete="<?php echo $row['s_id']; ?>">
+                                            <button type="button" class="btn btn-danger"  id="delete" id_delete="<?php echo $row['s_id']; ?>">
                                                 Xóa
                                             </button>
                                         </td>
@@ -314,12 +319,15 @@ session_start();
     </div>
 
 
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="assets/demo/chart-area-demo.js"></script>
+    <script src="assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-
-    <script src="js/books.js"></script>
+    <script src="js/books.js"></script> 
 </body>
 
 </html>

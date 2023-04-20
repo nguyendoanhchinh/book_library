@@ -1,15 +1,79 @@
 // thêm
-$(document).ready(function() {
-    $('#btnAdd').click(function() {
-        var tensach = $('#tensach').val();
-        var tensach = $('#tensach').val();
-        var tensach = $('#tensach').val();
-        var tensach = $('#tensach').val();
-        var tensach = $('#tensach').val();
-        var tensach = $('#tensach').val();
-    })
+
+
+//hiển thị dữ liệu sửa
+
+//sủa dữ liệu
+
+$(document).on('click', '#display', function() {
+    var id = $(this).attr('id_update');
+    var s_ten = $(this).attr('s_ten');
+    var s_gia = $(this).attr('s_gia');
+    var s_giamgia = $(this).attr('s_giamgia');
+    var nxb = $(this).attr('nxb');
+    var namxuatban = $(this).attr('namxuatban');
+    var sotrang = $(this).attr('sotrang');
+    var soluong = $(this).attr('soluong');
+    var ngonngu = $(this).attr('ngonngu');
+    var tacgia = $(this).attr('tacgia');
+    var theloai = $(this).attr('theloai');
+    $('#displayModal').modal('show');
+    $('#hidden_id').val(id);
+    $('#s_tensach').val(s_ten)
+    $('#s_giasach').val(s_gia)
+    $('#s_sachgiamgia').val(s_giamgia)
+    $('#s_nxb').val(nxb)
+    $('#s_namxuatban').val(namxuatban)
+    $('#s_sotrang').val(sotrang)
+    $('#s_soluong').val(soluong)
+    $('#s_ngonngu').val(ngonngu)
+    $('#s_tacgia').val(tacgia)
+    $('#s_theloai').val(theloai)
+
+})
+$(document).on('click', '#tbnSua', function() {
+    var action = 'sua';
+    var id = ('#hidden_id').val();
+    var s_tensach = ('#s_tensach').val();
+    var s_giasach = ('#s_giasach').val();
+    var s_sachgiamgia = ('#s_sachgiamgia').val();
+    var s_nxb = ('#s_nxb').val();
+    var s_namxuatban = ('#s_namxuatban').val();
+    var s_sotrang = ('#s_sotrang').val();
+    var s_soluong = ('#s_soluong').val();
+    var s_ngonngu = ('#s_ngonngu').val();
+    var s_tacgia = ('#s_tacgia').val();
+    var s_theloai = ('#s_theloai').val();
+
+    $.ajax({
+        type: "POST ",
+        url: "bookmodel.php",
+        data: {
+            action: action,
+            id: id,
+            s_tensach: s_tensach,
+            s_giasach: s_giasach,
+            s_sachgiamgia: s_sachgiamgia,
+            s_nxb: s_nxb,
+            s_namxuatban: s_namxuatban,
+            s_sotrang: s_sotrang,
+            s_soluong: s_soluong,
+            s_ngonngu: s_ngonngu,
+            s_tacgia: s_tacgia,
+            s_theloai: s_theloai
+        },
+
+        success: function(data) {
+            console.log(data)
+            $('#displayModal').modal('show');
+            $('#pagination_book').hide();
+        }
+    });
 })
 
+
+
+//xóa dữ liệu sách
 
 //tìm kiếm
 $(document).ready(function() {
@@ -63,99 +127,20 @@ $(document).on('click', '#search_btn', function(e) {
     })
     //hiển thị 1 sản phẩm
 $(document).on('click', '#list_search', function() {
-        var id = $(this).attr('value');
-        console.log(id)
-        var action = 'list_book';
-        var load = $('#btnseach').val();
-        $.ajax({
-            type: "POST",
-            url: "bookmodel.php",
-            data: { id: id, action: action, load: load },
-
-            success: function(data) {
-
-                $('#pagination_book').hide()
-                $('.dropdown-item').hide()
-                $('.table-data').html(data)
-            }
-        });
-    })
-    //hiển thị dữ liệu sửa
-
-$(document).on('click', '.display', function() {
-
-        var $id_update = $(this).attr('id_update');
-        var $s_gia = $(this).attr('s_gia');
-        var $nxb = $(this).attr('nxb');
-        var $giamgia = $(this).attr('giamgia');
-        var $namxuatban = $(this).attr('namxuatban');
-        var $soluong = $(this).attr('soluong');
-        var $ngonngu = $(this).attr('ngonngu');
-        var $tg_ten = $(this).attr('tg_ten');
-        var $tl_ten = $(this).attr('tl_ten');
-        $('#displayModal').modal('show')
-        $('#hidden_id').val($id_update)
-        $('#s_gia').val($s_gia)
-        $('#nxb').val($nxb)
-        $('#giamgia').val($giamgia)
-        $('#namxuatban').val($namxuatban)
-        $('#soluong').val($soluong)
-        $('#ngonngu').val($ngonngu)
-        $('#tentacgia').val($tg_ten)
-        $('#tentheloai').val($tl_ten)
-    })
-    //sủa dữ liệu
-
-$(document).on('click', '#btnupdate', function() {
-
-        var action = "update";
-        var id = $('#hidden_id').val();
-        var s_gia = $('#s_gia').val();
-        var nxb = $('#nxb').val();
-        var giamgia = $('#giamgia').val();
-        var namxuatban = $('#namxuatban').val();
-        var soluong = $('#soluong').val();
-        var ngonngu = $('#ngonngu').val();
-        var tentacgia = $('#tentacgia').val();
-        var tentheloai = $('#tentheloai').val();
-
-        $.ajax({
-            method: "POST",
-            url: "bookmodel.php",
-            data: { action: action, id: id, s_gia: s_gia, nxb: nxb, giamgia: giamgia, namxuatban: namxuatban, soluong: soluong, ngonngu: ngonngu, tentacgia: tentacgia, tentheloai: tentheloai },
-            success: function(data) {
-                if (data == 1) {
-                    $("#displayModal").modal('hide');
-                    alert('Sửa thành công');
-                    location.reload();
-                } else {
-                    alert("sửa thất bại");
-                }
-
-            }
-        });
-    })
-    //xóa dữ liệu sách
-
-$(document).on('click', '#delete', function() {
-    var action = "delete";
-
-    var id = $(this).attr('id_delete');
-
+    var id = $(this).attr('value');
+    console.log(id)
+    var action = 'list_book';
+    var load = $('#btnseach').val();
     $.ajax({
-        url: 'bookmodel.php',
-        method: 'POST',
-        data: { action: action, id: id },
+        type: "POST",
+        url: "bookmodel.php",
+        data: { id: id, action: action, load: load },
+
         success: function(data) {
-            alert(data);
-            if (data == 1) {
 
-
-                alert('Sửa thành công');
-                location.reload();
-            } else {
-                alert("Xóa  thất bại");
-            }
+            $('#pagination_book').hide()
+            $('.dropdown-item').hide()
+            $('.table-data').html(data)
         }
-    })
+    });
 })
