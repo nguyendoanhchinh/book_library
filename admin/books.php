@@ -18,6 +18,7 @@ session_start();
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
+
 <body class="sb-nav-fixed">
     <?php include "inc/nav.php"; ?>
     <div id="layoutSidenav">
@@ -65,43 +66,43 @@ session_start();
                                             <div class="d-flex">
                                                 <div class="mb-3">
                                                     <label for="giasach" class="form-label">Gía sách</label>
-                                                    <input type="number" class="form-control" id="giasach">
+                                                    <input type="number" class="form-control" id="giasach" name="giasach">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="sachgiamgia" class="form-label">Giảm Gía</label>
-                                                    <input type="number" class="form-control" id="sachgiamgia">
+                                                    <input type="number" class="form-control" id="sachgiamgia" name="sachgiamgia">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="nxb" class="form-label">Nhà xuất bản</label>
-                                                    <input type="text" class="form-control" id="nxb">
+                                                    <input type="text" class="form-control" id="nxb" name="nxb">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="namxuatban" class="form-label">Năm xuất bản</label>
-                                                    <input type="number" class="form-control" id="namxuatban">
+                                                    <input type="number" class="form-control" id="namxuatban" name="namxuatban">
                                                 </div>
                                             </div>
 
                                             <div class="mb-3">
                                                 <label for="mota" class="form-label">Mô tả</label>
-                                                <input type="text" class="form-control" id="mota">
+                                                <input type="text" class="form-control" id="mota" name="mota">
                                             </div>
 
                                             <div class="d-flex">
                                                 <div class="mb-3">
                                                     <label for="sotrang" class="form-label">Số trang</label>
-                                                    <input type="number" class="form-control" id="sotrang">
+                                                    <input type="number" class="form-control" id="sotrang" name="sotrang">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="soluong" class="form-label">Số lượng</label>
-                                                    <input type="number" class="form-control" id="soluong">
+                                                    <input type="number" class="form-control" id="soluong" name="soluong">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="ngonngu" class="form-label">Ngôn ngữ</label>
-                                                    <input type="text" class="form-control" id="ngonngu">
+                                                    <input type="text" class="form-control" id="ngonngu" name="ngonngu">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="tacgia" class="form-label">Tác giả</label>
-                                                    <select class="form-select" aria-label="Default select example">
+                                                    <select class="form-select" id="tacgia" aria-label="Default select example">
                                                         <option selected>--Lựa chọn Tác giả--</option>
                                                         <?php
                                                         $sql = "select * from tacgia ";
@@ -115,8 +116,8 @@ session_start();
 
                                             </div>
                                             <div class="mb-3">
-                                                <label for="tacgia" class="form-label">Thể loại</label>
-                                                <select class="form-select" aria-label="Default select example">
+                                                <label for="theloai" class="form-label">Thể loại</label>
+                                                <select class="form-select" id="theloai" aria-label="Default select example">
                                                     <option selected>--Lựa chọn thể loại--</option>
                                                     <?php
                                                     $sql = "select * from theloai ";
@@ -129,11 +130,11 @@ session_start();
                                             </div>
                                             <div class="mb-3">
                                                 <label for="anhsach" class="form-label">Ảnh chính</label>
-                                                <input type="file" class="form-control" id="anhsach" aria-describedby="emailHelp">
+                                                <input type="file" class="form-control" name="anhsach" id="anhsach" aria-describedby="emailHelp">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="anhsach" class="form-label">Ảnh phụ(nếu có)</label>
-                                                <input type="file" class="form-control" id="anhsach" aria-describedby="emailHelp">
+                                                <input type="file" class="form-control" name="anhsach1" id="anhsach1" aria-describedby="emailHelp">
                                             </div>
                                         </form>
                                     </div>
@@ -167,28 +168,28 @@ session_start();
                                                 <div class="mb-3"><label for="soluong" class="form-label">Số lượng</label><input type="number" class="form-control" id="s_soluong" name="s_soluong"></div>
                                                 <div class="mb-3"><label for="ngonngu" class="form-label">Ngôn ngữ</label><input type="text" class="form-control" id="s_ngonngu" name="s_ngonngu"></div>
                                                 <div class="mb-3">
-                                                    <label for="s_tacgia"  class="form-label">Tác giả</label>
+                                                    <label for="s_tacgia" class="form-label">Tác giả</label>
                                                     <select id="s_tacgia" class="form-select" aria-label="Default select example">
-                                                        
+
                                                         <?php
                                                         $sql = "select * from tacgia ";
                                                         $query = mysqli_query($conn, $sql);
                                                         while ($row = mysqli_fetch_assoc($query)) { ?>
-                                                            <option selected ><?php echo $row['tg_ten'] ?></option>
+                                                            <option selected><?php echo $row['tg_ten'] ?></option>
                                                         <?php }
                                                         ?>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="s_theloai"   class="form-label">Thể loại</label>
+                                                <label for="s_theloai" class="form-label">Thể loại</label>
                                                 <select id="s_theloai" class="form-select" aria-label="Default select example">
-                                                    
+
                                                     <?php
                                                     $sql = "select * from theloai ";
                                                     $query = mysqli_query($conn, $sql);
                                                     while ($row = mysqli_fetch_assoc($query)) { ?>
-                                                        <option selected   ><?php echo $row['tl_ten'] ?></option>
+                                                        <option selected><?php echo $row['tl_ten'] ?></option>
                                                     <?php }
                                                     ?>
                                                 </select>
@@ -260,23 +261,10 @@ session_start();
                                         <td><?php echo $row['tg_ten']; ?></td>
                                         <td><?php echo $row['tl_ten']; ?></td>
                                         <td>
-                                            <button type="button" class="btn btn-warning " 
-                                            id_update="<?php  echo $row['s_id']; ?>"
-                                            s_ten="<?php  echo $row['s_ten']; ?>"
-                                            s_gia="<?php  echo $row['s_gia']; ?>"
-                                            s_giamgia="<?php  echo $row['s_giamgia']; ?>"
-                                            nxb="<?php  echo $row['nxb']; ?>"
-                                            namxuatban="<?php  echo $row['namxuatban']; ?>"
-                                            sotrang="<?php  echo $row['sotrang']; ?>"
-                                            soluong="<?php  echo $row['soluong']; ?>"
-                                            ngonngu="<?php  echo $row['ngonngu']; ?>"
-                                            id="display"
-                                            tacgia="<?php echo $row['tg_ten'] ?>"
-                                            theloai="<?php echo $row['tl_ten'] ?>"
-                                            data-bs-toggle="modal" data-bs-target="#displayModal">
+                                            <button type="button" class="btn btn-warning " id_update="<?php echo $row['s_id']; ?>" s_ten="<?php echo $row['s_ten']; ?>" s_gia="<?php echo $row['s_gia']; ?>" s_giamgia="<?php echo $row['s_giamgia']; ?>" nxb="<?php echo $row['nxb']; ?>" namxuatban="<?php echo $row['namxuatban']; ?>" sotrang="<?php echo $row['sotrang']; ?>" soluong="<?php echo $row['soluong']; ?>" ngonngu="<?php echo $row['ngonngu']; ?>" id="display" tacgia="<?php echo $row['tg_ten'] ?>" theloai="<?php echo $row['tl_ten'] ?>" data-bs-toggle="modal" data-bs-target="#displayModal">
                                                 Sửa
                                             </button>
-                                            <button type="button" class="btn btn-danger"  id="delete" id_delete="<?php echo $row['s_id']; ?>">
+                                            <button type="button" class="btn btn-danger" id="delete" id_delete="<?php echo $row['s_id']; ?>">
                                                 Xóa
                                             </button>
                                         </td>
@@ -319,7 +307,7 @@ session_start();
     </div>
 
 
-  
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
@@ -327,7 +315,7 @@ session_start();
     <script src="assets/demo/chart-area-demo.js"></script>
     <script src="assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-    <script src="js/books.js"></script> 
+    <script src="js/books.js"></script>
 </body>
 
 </html>

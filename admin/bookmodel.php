@@ -2,29 +2,33 @@
 include "../database/connect.php";
 $action = $_POST['action'];
 
-//
-
-// sua
-if($action=='sua'){
-    $id=$_POST['id'];
-    $tensach=$_POST['s_tensach'];
-    $giasach=$_POST['s_giasach'];
-    $sachgiamgia=$_POST['s_sachgiamgia'];
-    $nxb=$_POST['s_nxb'];
-    $namxuatban=$_POST['s_namxuatban'];
-    $sotrang=$_POST['s_sotrang'];
-    $soluong=$_POST['s_soluong'];
-    $ngonngu=$_POST['s_ngonngu'];
-    $tacgia=$_POST['s_tacgia'];
-    $theloai=$_POST['s_theloai'];
-    $sql="UPDATE `sach` SET `s_ten`='$tensach',`s_gia`='$giasach',`s_giamgia`=' $sachgiamgia',`nxb`=' $nxb',
-    `namxuatban`=' $namxuatban',`sotrang`=' $sotrang',`soluong`='$soluong',`ngonngu`='$ngonngu',`tg_id`=' $tacgia'
-    ,`tl_id`=' $theloai' WHERE `s_id`='$id'";
-    $query=mysqli_query($conn,$sql);
-
+//thêm sách 
+if ($action == 'addBook') {
 }
-
-// hiển thị
+// sửa sách
+if ($action == 'updateBook') {
+    $id = $_POST['id'];
+    $tensach = $_POST['s_tensach'];
+    $giasach = $_POST['s_giasach'];
+    $sachgiamgia = $_POST['s_sachgiamgia'];
+    $nxb = $_POST['s_nxb'];
+    $namxuatban = $_POST['s_namxuatban'];
+    $sotrang = $_POST['s_sotrang'];
+    $soluong = $_POST['s_soluong'];
+    $ngonngu = $_POST['s_ngonngu'];
+    // $tg_id=$_POST['s_tacgia'];
+    // $tl_id=$_POST['s_theloai'];
+    $sql = "UPDATE `sach` SET `s_ten`='$tensach',`s_gia`='$giasach',`s_giamgia`=' $sachgiamgia',`nxb`=' $nxb',
+    `namxuatban`=' $namxuatban',`sotrang`=' $sotrang',`soluong`='$soluong',`ngonngu`='$ngonngu',`tg_id`='$tg_id'
+    ,`tl_id`='$tl_id' WHERE `s_id`='$id'";
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        echo "Sửa thành công";
+    } else {
+        echo "Sửa thất bại";
+    }
+}
+// hiển thị sách
 if ($action == 'loadData') {
     $load = $_POST['load'];
     $sql = "SELECT * from  sach INNER JOIN tacgia ON tacgia.tg_id = sach.tg_id
@@ -63,9 +67,10 @@ if ($action == 'loadData') {
                     Xóa
                 </button>
             </td>
-        <?php  }
-        ?>
-        <?php }
+            <?php  }
+    }
+
+//tim kiến sách
     if ($action == 'search') {
         $s_ten = $_POST['s_ten'];
         $sql = "SELECT * from  sach where s_ten like CONCAT('%$s_ten%') or nxb like CONCAT('%$s_ten%') limit 15";
@@ -84,7 +89,8 @@ if ($action == 'loadData') {
         ?>
         <?php
     }
-    if ($action == 'list_book') {
+//danh sách sách
+if ($action == 'list_book') {
         $id = $_POST['id'];
         $sql = "SELECT * from  sach INNER JOIN tacgia ON tacgia.tg_id = sach.tg_id
     INNER JOIN theloai ON sach.tl_id = theloai.tl_id   where s_id=$id ";
@@ -123,10 +129,40 @@ if ($action == 'loadData') {
             </td>
         <?php  }
         ?>
-    <?php }
+        <?php }
 
-    //update
+// xóa dữ liệu sách
+if ($action == 'deleteBook') {
+        $id = $_POST['id'];
+        $sql = "DELETE FROM `sach` WHERE s_id='$id'";
+        $query = mysqli_query($conn, $sql);
+        if ($query) {
+            echo "Xóa thành công";
+        } else {
+            echo "Xóa thất bại";
+        }
+    }
+//hiện thị danh sách tác giả
+if ($action == 'loadAuthor') {
+       //đếm tổng số sách của tác giả trong bảng sách cả tác giả không có quển sách nào
+        $sql="SELECT tacgia.tg_id, tacgia.tg_ten, COUNT(sach.tg_id) as tongsosach 
+        FROM tacgia 
+        LEFT JOIN sach ON sach.tg_id = tacgia.tg_id 
+        GROUP BY tacgia.tg_id, tacgia.tg_ten";
+         $query = mysqli_query($conn, $sql);
+        $i=1;
+        while ($row = mysqli_fetch_assoc($query)) { ?>
+        <tr>
+            <td class="text-center"><?php echo $i++; ?></td>
+            <td class="text-center"><?php echo $row['tg_ten']; ?></td>
+            <td class="text-center"><?php echo $row['tongsosach']; ?></td>
+            <td style="text-align:center;" class="text-center"><button type="button" class="btn btn-warning text-center" data-bs-toggle="modal" data-bs-target="#suaModal">
+                    Sửa tác giả
+                </button>
+                <button class="btn btn-danger " id_delete="<?php echo $row['tg_id']; ?>">Xóa</button>
+            </td>
+        </tr>
+<?php }
+    }
+//thêm tác giả
 
-
-
-    ?>

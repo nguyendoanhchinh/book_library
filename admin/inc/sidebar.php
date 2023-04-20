@@ -9,9 +9,9 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                             Quản lý sách
                         </a>
-                        <a class="nav-link " href="categorys.php" >
+                        <a class="nav-link " href="authors.php" >
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                            Quản lý Thể loại
+                            Quản lý Tác giả
                         </a>
                     </div>
                 </div>
