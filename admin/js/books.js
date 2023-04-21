@@ -1,14 +1,30 @@
 // thêm
 $(document).on('click', '#btnAdd', function(e) {
-    e.preventDefault();
+        e.preventDefault();
 
 
+    })
+    //tìm kiếm theo thể loại
+
+
+$('#tim_theloai').change(function() {
+    var id = $("#tim_theloai").val();
+    var action = 'searchbycategory'
+    $.ajax({
+        url: "bookmodel.php",
+        type: "POST",
+        data: { id: id, action: action },
+        success: function(data) {
+
+            $(".table-data").html(data);
+            $('#pagination_book').hide()
+        }
+    })
 })
 
+
+
 //hiển thị dữ liệu sửa
-
-
-
 $(document).on('click', '#display', function() {
         var id = $(this).attr('id_update');
         var s_ten = $(this).attr('s_ten');

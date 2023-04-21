@@ -33,17 +33,31 @@ session_start();
                 <div class="card-body">
                     <div class="card mb-10">
                         <!-- tìm kiếm  -->
-                        <form action="" method="POST" class="mr-2 col-sm-2 p-4 ">
-                            <div class="dropdown">
-                                <div class="d-flex">
-                                    <input class="form-control rounded" type="text" id="btnseach" data-bs-toggle="dropdown" aria-expanded="false" autocomplete="off">
-                                    <input type="submit" class="btn btn-primary" id="search_btn" value="Tìm Kiếm">
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="list_dropdown">
-                                    </ul>
+                        <div class="d-flex">
+                            <form action="" method="POST" class="mr-2 col-sm-2 p-4 ">
+                                <div class="dropdown">
+                                    <div class="d-flex">
+                                        <input class="form-control rounded" type="text" id="btnseach" data-bs-toggle="dropdown" aria-expanded="false" autocomplete="off">
+                                        <input type="submit" class="btn btn-primary" id="search_btn" value="Tìm Kiếm">
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="list_dropdown">
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                        <!--  -->
+
+                            </form>
+                            <form action="" method="POST" class="mr-2 col-sm-2 p-4 ">
+                                <select class="form-select " id="tim_theloai" aria-label="Default select example">
+                                    <option selected>Tìm kiếm theo thể loại</option>
+                                    <?php
+                                    $sql = "select * from theloai ";
+                                    $query = mysqli_query($conn, $sql);
+                                    while ($row = mysqli_fetch_assoc($query)) { ?>
+                                        <option  value="<?php echo $row['tl_id']; ?>"><?php echo $row['tl_ten'] ?></option>
+                                    <?php }
+                                    ?>
+                                </select>
+                            </form>
+                        </div>
                         <!-- Modal thêm  sách-->
                         <button type="submit" class="btn btn-success col-sm-1 pb-2 m-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Thêm
@@ -170,13 +184,13 @@ session_start();
 
                                                 <div class="mb-3">
                                                     <label for="s_tacgia" class="form-label">Tác giả</label>
-                                                    <select  id="s_tacgia" class="form-select" aria-label="Default select example">
+                                                    <select id="s_tacgia" class="form-select" aria-label="Default select example">
                                                         <?php
                                                         $sql = "select * from tacgia";
                                                         $query = mysqli_query($conn, $sql);
                                                         while ($row = mysqli_fetch_assoc($query)) {
                                                         ?>
-                                                            <option  value="<?php echo $row['tg_id']; ?>"><?php echo $row['tg_ten'] ?></option>
+                                                            <option value="<?php echo $row['tg_id']; ?>"><?php echo $row['tg_ten'] ?></option>
                                                         <?php
                                                         }
                                                         ?>
@@ -280,7 +294,7 @@ session_start();
                                 <?php
                                 if ($current_page > 1 && $total_page > 1) { ?>
                                     <li class="page-item ">
-                                        <a class="page-link" href="books.php?page=<?php echo $current_page - 1; ?>" tabindex="-1">Trang sau</a>
+                                        <a class="page-link" href="books.php?page=<?php echo $current_page - 1; ?>" tabindex="-1">Trang trước</a>
                                     </li>
                                 <?php  }
                                 ?>
@@ -293,7 +307,7 @@ session_start();
                                 <?php
                                 if ($current_page < $total_page && $total_page > 1) { ?>
                                     <li class="page-item">
-                                        <a class="page-link" href="books.php?page=<?php echo $current_page + 1; ?>">Trang trước</a>
+                                        <a class="page-link" href="books.php?page=<?php echo $current_page + 1; ?>">Trang sau</a>
                                     </li>
                                 <?php
                                 }
