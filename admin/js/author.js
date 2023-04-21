@@ -56,7 +56,7 @@ $(document).on('click', '#deleteAuthor', function() {
             action: action,
         },
         success: function(data) {
-
+            location.reload()
             loadAuthor()
             alert(data)
         }
@@ -75,6 +75,7 @@ $(document).on('click', '#addAuthoradmin', function() {
 
         success: function(data) {
             loadAuthor()
+            location.reload();
             alert(data);
             $("#themauthor").modal('hide');
         }

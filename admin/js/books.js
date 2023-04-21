@@ -1,52 +1,7 @@
 // thêm
 $(document).on('click', '#btnAdd', function(e) {
     e.preventDefault();
-    var action = 'addBook';
-    var tensach = $('#tensach').val();
-    var giasach = $('#giasach').val();
-    var sachgiamgia = $('#sachgiamgia').val();
-    var nxb = $('#nxb').val();
-    var namxuatban = $('#namxuatban').val();
-    var mota = $('#mota').val();
-    var soluong = $('#soluong').val();
-    var ngonngu = $('#ngonngu').val();
-    var tacgia = $('#tensach').val();
-    var theloai = $('#theloai').val();
-    var anhsach = $('#anhsach')[0].files;
-    var anhsach1 = $('#anhsach1')[0].files;
 
-    if (tensach != '' && giasach != '' && sachgiamgia != '' && nxb != '' &&
-        namxuatban != '' && mota != '' && soluong != '' && tacgia != '' && ngonngu != '' && theloai != '' && anhsach != '') {
-        $.ajax({
-            type: "POST",
-            url: "bookmodel.php",
-            contentType: false,
-            processData: false,
-            data: {
-                action: action,
-                tensach: tensach,
-                giasach: giasach,
-                sachgiamgia: sachgiamgia,
-                nxb: nxb,
-                namxuatban: namxuatban,
-                mota: mota,
-                soluong: soluong,
-                ngonngu: ngonngu,
-                tacgia: tacgia,
-                theloai: theloai,
-                anhsach: anhsach,
-                anhsach1: anhsach1
-            },
-            dataType: "dataType",
-            success: function(data) {
-
-            }
-
-        });
-    } else {
-        alert("Điền đầy đủ thông tin!");
-
-    }
 
 })
 

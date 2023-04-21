@@ -57,52 +57,52 @@ session_start();
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form>
+                                        <form id="fupload" method="POST" enctype="multipart/form-data">
 
                                             <div class="mb-3">
-                                                <label for="tensach" class="form-label">Tên sách</label>
-                                                <input type="text" class="form-control" id="tensach">
+                                                <label for="t_tensach" class="form-label">Tên sách</label>
+                                                <input type="text" class="form-control" id="t_tensach">
                                             </div>
                                             <div class="d-flex">
                                                 <div class="mb-3">
-                                                    <label for="giasach" class="form-label">Gía sách</label>
-                                                    <input type="number" class="form-control" id="giasach" name="giasach">
+                                                    <label for="t_giasach" class="form-label">Gía sách</label>
+                                                    <input type="number" class="form-control" id="t_giasach" name="t_giasach">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="sachgiamgia" class="form-label">Giảm Gía</label>
-                                                    <input type="number" class="form-control" id="sachgiamgia" name="sachgiamgia">
+                                                    <label for="t_sachgiamgia" class="form-label">Giảm Gía</label>
+                                                    <input type="number" class="form-control" id="t_sachgiamgia" name="t_sachgiamgia">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="nxb" class="form-label">Nhà xuất bản</label>
-                                                    <input type="text" class="form-control" id="nxb" name="nxb">
+                                                    <label for="t_nxb" class="form-label">Nhà xuất bản</label>
+                                                    <input type="text" class="form-control" id="t_nxb" name="t_nxb">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="namxuatban" class="form-label">Năm xuất bản</label>
-                                                    <input type="number" class="form-control" id="namxuatban" name="namxuatban">
+                                                    <label for="t_namxuatban" class="form-label">Năm xuất bản</label>
+                                                    <input type="number" class="form-control" id="t_namxuatban" name="t_namxuatban">
                                                 </div>
                                             </div>
 
                                             <div class="mb-3">
-                                                <label for="mota" class="form-label">Mô tả</label>
-                                                <input type="text" class="form-control" id="mota" name="mota">
+                                                <label for="t_mota" class="form-label">Mô tả</label>
+                                                <input type="text" class="form-control" id="t_mota" name="t_mota">
                                             </div>
 
                                             <div class="d-flex">
                                                 <div class="mb-3">
-                                                    <label for="sotrang" class="form-label">Số trang</label>
-                                                    <input type="number" class="form-control" id="sotrang" name="sotrang">
+                                                    <label for="t_sotrang" class="form-label">Số trang</label>
+                                                    <input type="number" class="form-control" id="t_sotrang" name="t_sotrang">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="soluong" class="form-label">Số lượng</label>
-                                                    <input type="number" class="form-control" id="soluong" name="soluong">
+                                                    <label for="t_soluong" class="form-label">Số lượng</label>
+                                                    <input type="number" class="form-control" id="t_soluong" name="t_soluong">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="ngonngu" class="form-label">Ngôn ngữ</label>
-                                                    <input type="text" class="form-control" id="ngonngu" name="ngonngu">
+                                                    <label for="t_ngonngu" class="form-label">Ngôn ngữ</label>
+                                                    <input type="text" class="form-control" id="t_ngonngu" name="t_ngonngu">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="tacgia" class="form-label">Tác giả</label>
-                                                    <select class="form-select" id="tacgia" aria-label="Default select example">
+                                                    <label for="t_tacgia" class="form-label">Tác giả</label>
+                                                    <select class="form-select" id="t_tacgia" aria-label="Default select example">
                                                         <option selected>--Lựa chọn Tác giả--</option>
                                                         <?php
                                                         $sql = "select * from tacgia ";
@@ -116,8 +116,8 @@ session_start();
 
                                             </div>
                                             <div class="mb-3">
-                                                <label for="theloai" class="form-label">Thể loại</label>
-                                                <select class="form-select" id="theloai" aria-label="Default select example">
+                                                <label for="t_theloai" class="form-label">Thể loại</label>
+                                                <select class="form-select" id="t_theloai" aria-label="Default select example">
                                                     <option selected>--Lựa chọn thể loại--</option>
                                                     <?php
                                                     $sql = "select * from theloai ";
@@ -176,7 +176,7 @@ session_start();
                                                         $query = mysqli_query($conn, $sql);
                                                         while ($row = mysqli_fetch_assoc($query)) {
                                                         ?>
-                                                            <option id="s_tacgia" value="<?php echo $row['tg_id']; ?>"><?php echo $row['tg_ten'] ?></option>
+                                                            <option  value="<?php echo $row['tg_id']; ?>"><?php echo $row['tg_ten'] ?></option>
                                                         <?php
                                                         }
                                                         ?>

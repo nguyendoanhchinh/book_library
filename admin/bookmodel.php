@@ -18,7 +18,7 @@ if ($action == 'updateBook') {
     $ngonngu = $_POST['s_ngonngu'];
     $tg_id = trim($_POST['s_tacgia']);
     $tl_id = trim($_POST['s_theloai']);
-   
+
     $sql = "UPDATE `sach` SET `s_ten`='$tensach',`s_gia`='$giasach',`s_giamgia`='$sachgiamgia',`nxb`='$nxb',
     `namxuatban`='$namxuatban',`sotrang`='$sotrang',`soluong`='$soluong',`ngonngu`='$ngonngu',`tg_id`='$tg_id',`tl_id`='$tl_id' WHERE `s_id`='$id'";
     $query = mysqli_query($conn, $sql);
@@ -90,7 +90,7 @@ if ($action == 'loadData') {
         <?php
     }
 //danh sách sách
-    if ($action == 'list_book') {
+if ($action == 'list_book') {
         $id = $_POST['id'];
         $sql = "SELECT * from  sach INNER JOIN tacgia ON tacgia.tg_id = sach.tg_id
     INNER JOIN theloai ON sach.tl_id = theloai.tl_id   where s_id=$id ";
@@ -131,7 +131,7 @@ if ($action == 'loadData') {
         ?>
         <?php }
 
-// xóa dữ liệu sách
+    // xóa dữ liệu sách
     if ($action == 'deleteBook') {
         $id = $_POST['id'];
         $sql = "DELETE FROM `sach` WHERE s_id='$id'";
@@ -142,7 +142,7 @@ if ($action == 'loadData') {
             echo "Xóa thất bại";
         }
     }
-//hiện thị danh sách tác giả
+    //hiện thị danh sách tác giả
     if ($action == 'loadAuthor') {
         //đếm tổng số sách của tác giả trong bảng sách cả tác giả không có quển sách nào
         $sql = "SELECT tacgia.tg_id, tacgia.tg_ten, COUNT(sach.tg_id) as tongsosach 
@@ -162,9 +162,9 @@ if ($action == 'loadData') {
                 <button class="btn btn-danger " id="deleteAuthor" id_deleteAuthor="<?php echo $row['tg_id']; ?>">Xóa</button>
             </td>
         </tr>
-<?php }
+    <?php }
     }
-//sửa tác giả
+    //sửa tác giả
     if ($action == 'updateAuthor') {
         $id = $_POST['id'];
         $tentacgia = $_POST['tentacgia'];
@@ -177,25 +177,111 @@ if ($action == 'loadData') {
         }
     }
 //xóa tác giả
-    if ($action == 'deleteAuthor') {
+if ($action == 'deleteAuthor') {
         $id = $_POST['id'];
-        $sql = "DELETE FROM `tacgia` WHERE tg_id='$id'";
-        $query = mysqli_query($conn, $sql);
-        if ($query) {
-            echo "Xóa thành công";
+        $sql = "SELECT COUNT(*) FROM sach WHERE tg_id='$id'";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_row($result);
+        if ($row[0] > 0) {
+            echo "Không thể xóa tác giả vì có sách thuộc tác giả này này";
         } else {
-            echo "Xóa thất bại";
+            $sql = "DELETE FROM tacgia WHERE tg_id='$id'";
+            $query = mysqli_query($conn, $sql);
+            if ($query) {
+                echo "Xóa thành công";
+            } else {
+                echo "Xóa thất bại";
+            }
         }
     }
 //thêm tác giả
+    if ($action == 'addAuthor') {
+        $nameauthor = $_POST['addauthor'];
+        $sql = "SELECT COUNT(*) FROM tacgia WHERE tg_ten='$nameauthor'";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_row($result);
+        if ($row[0] > 0) {
+            echo "Tên tác giả đã tồn tại";
+        } else {
+            $sql = "INSERT INTO tacgia(tg_ten) VALUES ('$nameauthor')";
+            $query = mysqli_query($conn, $sql);
+            if ($query) {
+                echo "Thêm thành công";
+            } else {
+                echo "Thêm thất bại";
+            }
+        }
+    }
 
-if($action=='addAuthor'){
-    $nameauthor=$_POST['addauthor'];
-    $sql="INSERT INTO `tacgia`( `tg_ten`) VALUES ('$nameauthor')";
-    $query=mysqli_query($conn,$sql);
-    if ($query) {
-        echo "Thêm  thành công";
+//thêm thể loại
+
+if ($action == 'addCategory') {
+    $namecategory = $_POST['themtheloai'];
+    $sql = "SELECT COUNT(*) FROM theloai WHERE tl_ten='$namecategory'";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_row($result);
+    if ($row[0] > 0) {
+        echo "Tên thể loại đã tồn tại";
     } else {
-        echo "Thêm thất bại";
+        $sql = "INSERT INTO theloai(tl_ten) VALUES ('$namecategory')";
+        $query = mysqli_query($conn, $sql);
+        if ($query) {
+            echo "Thêm thành công";
+        } else {
+            echo "Thêm thất bại";
+        }
     }
 }
+
+//hiển thị danh sách thể loại
+    if ($action == 'loadCategory') {
+        //đếm tổng số sách của tác giả trong bảng sách cả tác giả không có quển sách nào
+        $sql = "SELECT theloai.tl_id, theloai.tl_ten, COUNT(sach.tl_id) as tongsosach 
+    FROM theloai 
+    LEFT JOIN sach ON sach.tl_id = theloai.tl_id 
+    GROUP BY theloai.tl_id, theloai.tl_ten";
+        $query = mysqli_query($conn, $sql);
+        $i = 1;
+        while ($row = mysqli_fetch_assoc($query)) { ?>
+        <tr>
+            <td class="text-center"><?php echo $i++; ?></td>
+            <td class="text-center"><?php echo $row['tl_ten']; ?></td>
+            <td class="text-center"><?php echo $row['tongsosach']; ?></td>
+            <td style="text-align:center;" id="btnsuacategory" id_theloai="<?php echo $row['tl_id']; ?>" ten_theloai="<?php echo $row['tl_ten']; ?>" class="text-center"><button type="button" class="btn btn-warning text-center" data-bs-toggle="modal" data-bs-target="#categoryModal">
+                    Sửa Thể loại
+                </button>
+                <button class="btn btn-danger " id="deletecategory" id_deletecategory="<?php echo $row['tl_id']; ?>">Xóa</button>
+            </td>
+        </tr>
+<?php }
+    }
+//sửa thể loại
+    if ($action == 'updatecategory') {
+        $id = $_POST['id'];
+        $tentacgia = $_POST['tentheloai'];
+        $sql = "UPDATE theloai set tl_ten='$tentacgia' where tl_id='$id'";
+        $query = mysqli_query($conn, $sql);
+        if ($query) {
+            echo "Sửa thành công";
+        } else {
+            echo "Sửa thất bại";
+        }
+    }
+//xóa thể loại
+    if ($action == 'deleteCategory') {
+        $id = $_POST['id'];
+        $sql = "SELECT COUNT(*) FROM sach WHERE tl_id='$id'";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_row($result);
+        if ($row[0] > 0) {
+            echo "Không thể xóa thể loại vì có sách thuộc thể loại này";
+        } else {
+            $sql = "DELETE FROM theloai WHERE tl_id='$id'";
+            $query = mysqli_query($conn, $sql);
+            if ($query) {
+                echo "Xóa thành công";
+            } else {
+                echo "Xóa thất bại";
+            }
+        }
+    }

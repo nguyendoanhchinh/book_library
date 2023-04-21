@@ -13,6 +13,10 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                             Quản lý Tác giả
                         </a>
+                        <a class="nav-link " href="categorys.php" >
+                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                            Quản lý Thể Loại
+                        </a>
                     </div>
                 </div>
             </nav>
