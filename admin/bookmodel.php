@@ -120,7 +120,7 @@ if ($action == 'loadData') {
             <td><?php echo $row['tg_ten']; ?></td>
             <td><?php echo $row['tl_ten']; ?></td>
             <td>
-                <button type="button" class="btn btn-warning " id_update="<?php echo $row['s_id']; ?>" s_ten="<?php echo $row['s_ten']; ?>" s_gia="<?php echo $row['s_gia']; ?>" s_giamgia="<?php echo $row['s_giamgia']; ?>" nxb="<?php echo $row['nxb']; ?>" namxuatban="<?php echo $row['namxuatban']; ?>" sotrang="<?php echo $row['sotrang']; ?>" soluong="<?php echo $row['soluong']; ?>" ngonngu="<?php echo $row['ngonngu']; ?>" id="display" tacgia="<?php echo $row['tg_ten'] ?>" theloai="<?php echo $row['tl_ten'] ?>" data-bs-toggle="modal" data-bs-target="#displayModal">
+                <button type="button" class="btn btn-warning " id_update="<?php echo $row['s_id']; ?>" s_ten="<?php echo $row['s_ten']; ?>" s_gia="<?php echo $row['s_gia']; ?>" s_giamgia="<?php echo $row['s_giamgia']; ?>" nxb="<?php echo $row['nxb']; ?>" namxuatban="<?php echo $row['namxuatban']; ?>" sotrang="<?php echo $row['sotrang']; ?>" soluong="<?php echo $row['soluong']; ?>" ngonngu="<?php echo $row['ngonngu']; ?>" id="display" tacgia="<?php echo $row['tg_id'] ?>" theloai="<?php echo $row['tl_id'] ?>" data-bs-toggle="modal" data-bs-target="#displayModal">
                     Sửa
                 </button>
                 <button type="button" class="btn btn-danger" id="delete" id_delete="<?php echo $row['s_id']; ?>">
@@ -187,3 +187,15 @@ if ($action == 'loadData') {
             echo "Xóa thất bại";
         }
     }
+//thêm tác giả
+
+if($action=='addAuthor'){
+    $nameauthor=$_POST['addauthor'];
+    $sql="INSERT INTO `tacgia`( `tg_ten`) VALUES ('$nameauthor')";
+    $query=mysqli_query($conn,$sql);
+    if ($query) {
+        echo "Thêm  thành công";
+    } else {
+        echo "Thêm thất bại";
+    }
+}

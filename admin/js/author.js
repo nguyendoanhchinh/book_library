@@ -62,3 +62,21 @@ $(document).on('click', '#deleteAuthor', function() {
         }
     })
 });
+
+//thêm tác giả 
+
+$(document).on('click', '#addAuthoradmin', function() {
+    var action = 'addAuthor';
+    var addauthor = $('#inputaddauthor').val();
+    $.ajax({
+        method: "POST",
+        url: "bookmodel.php",
+        data: { action: action, addauthor: addauthor },
+
+        success: function(data) {
+            loadAuthor()
+            alert(data);
+            $("#themauthor").modal('hide');
+        }
+    });
+})

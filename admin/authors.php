@@ -31,7 +31,8 @@ session_start();
            
                 <main>
                     <div class="container-fluid px-4">
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <!-- thêm -->
+                        <div class="modal fade" id="themauthor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -41,19 +42,19 @@ session_start();
                                     <div class="modal-body">
                                         <form>
                                             <div class="mb-3">
-                                                <label for="tacgia" class="form-label">Tác giả</label>
-                                                <input type="text" class=" form-control" id="tacgia" name="tacgia" aria-describedby="tacgia">
+                                                <label for="inputaddauthor" class="form-label">Tác giả</label>
+                                                <input type="text" class=" form-control" id="inputaddauthor" name="inputaddauthor" aria-describedby="tacgia">
                                             </div>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                        <button type="button" class="btn btn-primary" id="btnAdd">Thêm</button>
+                                        <button type="button" class="btn btn-primary" id="addAuthoradmin">Thêm</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal sửa -->
+                        <!--  sửa -->
                         <div class="modal fade" id="modalAuthor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -84,7 +85,7 @@ session_start();
                         </div>
                         <h1 class="mt-4">Quản lý Tác giả</h1>
                         <ol class="breadcrumb mb-4">
-                            <button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#themauthor">
                                 Thêm tác giả
                             </button>
                             <table class="table  mt-5">
@@ -107,7 +108,7 @@ session_start();
         
     </div>
     <script src="js/author.js"></script>
-    <script src="js/category.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
