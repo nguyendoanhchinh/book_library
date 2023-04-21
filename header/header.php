@@ -102,7 +102,7 @@
                                         <input type="text" name="search" class="typeahead form-control" placeholder="Search by title, author, keyword, ISBN...">
                                         <button type="submit"><i class="icon-magnifier"></i></button>
                                     </fieldset>
-                                    <a href="#">+  Advanced Search</a>
+                                    
                                 </form>
                             </div>
                         </div>
@@ -124,16 +124,7 @@
                                 </div>
                                 <div id="tg-navigation" class="collapse navbar-collapse tg-navigation">
                                     <ul>
-                                        <li class="menu-item-has-children menu-item-has-mega-menu">
-                                            <a href="#">All Categories</a>
-                                            <ul class="sub-menu">
-                                                <li class="current-menu-item"><a href="#">Art & Photography</a></li>
-                                                <li><a href="#">Biography</a></li>
-                                                <li><a href="#">Children’s Book</a></li>
-                                                <li><a href="#">Craft & Hobbies</a></li>
-
-                                            </ul>
-                                        </li>
+                                        
                                         <li class="menu-item-has-children current-menu-item">
                                             <a href="index.php">Home</a>
                                             

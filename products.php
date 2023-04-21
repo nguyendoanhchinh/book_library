@@ -104,7 +104,7 @@
 											</div>
 										</div>
 										<div class="tg-productgrid">
-											<div class="tg-refinesearch">
+											<!-- <div class="tg-refinesearch">
 												<span>showing 1 to 8 of 20 total</span>
 												<form class="tg-formtheme tg-formsortshoitems">
 													<fieldset>
@@ -130,7 +130,7 @@
 														</div>
 													</fieldset>
 												</form>
-											</div>
+											</div> -->
 											<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
 												<div class="tg-postbook">
 													<figure class="tg-featureimg">
@@ -460,6 +460,7 @@
 													</div>
 												</div>
 											</div>
+											
 											<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
 												<div class="tg-postbook">
 													<figure class="tg-featureimg">
@@ -530,7 +531,9 @@
 										</div>
 									</div>
 								</div>
+								<button class="btn btn-success ">Xem thêm</button>
 							</div>
+						
 							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 pull-left">
 								<aside id="tg-sidebar" class="tg-sidebar">
 									<div class="tg-widget tg-widgetsearch">

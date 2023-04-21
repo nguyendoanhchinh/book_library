@@ -52,7 +52,7 @@ session_start();
                                     $sql = "select * from theloai ";
                                     $query = mysqli_query($conn, $sql);
                                     while ($row = mysqli_fetch_assoc($query)) { ?>
-                                        <option  value="<?php echo $row['tl_id']; ?>"><?php echo $row['tl_ten'] ?></option>
+                                        <option value="<?php echo $row['tl_id']; ?>"><?php echo $row['tl_ten'] ?></option>
                                     <?php }
                                     ?>
                                 </select>
@@ -246,12 +246,10 @@ session_start();
                                 //tìm giới hạn và trang đầu tiên
                                 $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
                                 $limit = 8;
-
                                 //tổng số trang làm  tròn lên
                                 $total_page = ceil($total / $limit);
                                 // Tìm trang đầu
                                 $start = ($current_page - 1) * $limit;
-
                                 $sql = "SELECT * from sach  INNER JOIN tacgia ON tacgia.tg_id = sach.tg_id
                                 INNER JOIN theloai ON sach.tl_id = theloai.tl_id limit  $start,$limit ";
                                 $query = mysqli_query($conn, $sql);
@@ -292,16 +290,41 @@ session_start();
                         <nav aria-label="Page navigation example " id="pagination_book">
                             <ul class="pagination justify-content-end">
                                 <?php
+                                $num_links = 1;
                                 if ($current_page > 1 && $total_page > 1) { ?>
                                     <li class="page-item ">
                                         <a class="page-link" href="books.php?page=<?php echo $current_page - 1; ?>" tabindex="-1">Trang trước</a>
                                     </li>
                                 <?php  }
+                                if ($current_page > $num_links + 1) { ?>
+                                    <li class="page-item">
+                                        <a class="page-link" href="books.php?page=1">1</a>
+                                    </li>
+                                    <li class="page-item disabled">
+                                        <span class="page-link">...</span>
+                                    </li>
+                                <?php }
                                 ?>
                                 <?php
-                                for ($i = 1; $i <= $total_page; $i++) { ?>
-                                    <li class="page-item"><a class="page-link" href="books.php?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
-                                <?php  }
+                                for ($i = max(1, $current_page - $num_links); $i <= min($total_page, $current_page + $num_links); $i++) {
+                                    if ($i == $current_page) { ?>
+                                        <li class="page-item active">
+                                            <span class="page-link"><?php echo $i; ?></span>
+                                        </li>
+                                    <?php } else { ?>
+                                        <li class="page-item">
+                                            <a class="page-link" href="books.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php }
+                                }
+                                if ($current_page < $total_page - $num_links) { ?>
+                                    <li class="page-item disabled">
+                                        <span class="page-link">...</span>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="books.php?page=<?php echo $total_page; ?>"><?php echo $total_page; ?></a>
+                                    </li>
+                                <?php }
                                 ?>
 
                                 <?php
@@ -309,8 +332,7 @@ session_start();
                                     <li class="page-item">
                                         <a class="page-link" href="books.php?page=<?php echo $current_page + 1; ?>">Trang sau</a>
                                     </li>
-                                <?php
-                                }
+                                <?php }
                                 ?>
 
                             </ul>
