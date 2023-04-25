@@ -29,7 +29,6 @@ if ($action == 'updateBook') {
     }
 }
 
-
 // hiển thị sách
 if ($action == 'loadData') {
     $load = $_POST['load'];
@@ -38,7 +37,7 @@ if ($action == 'loadData') {
     $query = mysqli_query($conn, $sql);
     while ($row = mysqli_fetch_assoc($query)) {
 
-?>
+    ?>
         <tr>
             <td>
                 <div class="d-flex align-items-center">
@@ -74,8 +73,8 @@ if ($action == 'loadData') {
 
 
 
-    //tim kiến sách
-    if ($action == 'search') {
+//tim kiến sách
+if ($action == 'search') {
         $s_ten = $_POST['s_ten'];
         $sql = "SELECT * from  sach where s_ten like CONCAT('%$s_ten%') or nxb like CONCAT('%$s_ten%') limit 15";
         $query = mysqli_query($conn, $sql);
@@ -93,8 +92,8 @@ if ($action == 'loadData') {
         ?>
         <?php
     }
-    //tìm kiếm theo thể loại
-    if ($action == 'searchbycategory') {
+//tìm kiếm theo thể loại
+if ($action == 'searchbycategory') {
         $id = $_POST['id'];
         $sql = "SELECT sach.*, tacgia.tg_ten, theloai.tl_ten FROM sach INNER JOIN tacgia ON sach.tg_id = tacgia.tg_id INNER JOIN 
         theloai ON sach.tl_id = theloai.tl_id WHERE sach.tl_id = '$id'";
@@ -135,8 +134,8 @@ if ($action == 'loadData') {
             echo "<h2 style='text-align: center;color: red;'>Không có sách thuộc thể loại này!</h2>";
         }
     }
-    //danh sách sách
-    if ($action == 'list_book') {
+//danh sách sách
+if ($action == 'list_book') {
         $id = $_POST['id'];
         $sql = "SELECT * from  sach INNER JOIN tacgia ON tacgia.tg_id = sach.tg_id
     INNER JOIN theloai ON sach.tl_id = theloai.tl_id   where s_id=$id ";
@@ -188,7 +187,7 @@ if ($action == 'loadData') {
             echo "Xóa thất bại";
         }
     }
-    //hiện thị danh sách tác giả
+//hiện thị danh sách tác giả
     if ($action == 'loadAuthor') {
         //đếm tổng số sách của tác giả trong bảng sách cả tác giả không có quển sách nào
         $sql = "SELECT tacgia.tg_id, tacgia.tg_ten, COUNT(sach.tg_id) as tongsosach 
@@ -210,8 +209,8 @@ if ($action == 'loadData') {
         </tr>
     <?php }
     }
-    //sửa tác giả
-    if ($action == 'updateAuthor') {
+//sửa tác giả
+if ($action == 'updateAuthor') {
         $id = $_POST['id'];
         $tentacgia = $_POST['tentacgia'];
         $sql = "UPDATE tacgia set tg_ten='$tentacgia' where tg_id='$id'";
@@ -279,8 +278,8 @@ if ($action == 'loadData') {
         }
     }
 
-    //hiển thị danh sách thể loại
-    if ($action == 'loadCategory') {
+//hiển thị danh sách thể loại
+if ($action == 'loadCategory') {
         //đếm tổng số sách của tác giả trong bảng sách cả tác giả không có quển sách nào
         $sql = "SELECT theloai.tl_id, theloai.tl_ten, COUNT(sach.tl_id) as tongsosach 
     FROM theloai 
@@ -301,8 +300,8 @@ if ($action == 'loadData') {
         </tr>
 <?php }
     }
-    //sửa thể loại
-    if ($action == 'updatecategory') {
+//sửa thể loại
+if ($action == 'updatecategory') {
         $id = $_POST['id'];
         $tentacgia = $_POST['tentheloai'];
         $sql = "UPDATE theloai set tl_ten='$tentacgia' where tl_id='$id'";
@@ -313,8 +312,8 @@ if ($action == 'loadData') {
             echo "Sửa thất bại";
         }
     }
-    //xóa thể loại
-    if ($action == 'deleteCategory') {
+//xóa thể loại
+if ($action == 'deleteCategory') {
         $id = $_POST['id'];
         $sql = "SELECT COUNT(*) FROM sach WHERE tl_id='$id'";
         $result = mysqli_query($conn, $sql);

@@ -9,7 +9,7 @@ $(document).on('click', '#btnAdd', function(e) {
 
 $('#tim_theloai').change(function() {
     var id = $("#tim_theloai").val();
-    var action = 'searchbycategory'
+    var action = 'searchbycategory';
     $.ajax({
         url: "bookmodel.php",
         type: "POST",

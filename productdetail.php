@@ -1,12 +1,26 @@
 <?php
-	session_start();
+session_start();
+include "database/connect.php";
+if (!isset($_GET['id'])) {
+	header('Location: index.php');
+	exit;
+}
+if (!isset($_GET['productdetail'])) {
+	$id = $_GET['id'];
+	$sql = "SELECT * from sach inner join tacgia on sach.tg_id=tacgia.tg_id INNER JOIN  theloai on theloai.tl_id=sach.tl_id  where s_id =$id ";
+	$query = mysqli_query($conn, $sql);
+	$row = mysqli_fetch_array($query);
+}
+
+
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	 <title>Book Library</title>
+	<title>Book Library</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -22,6 +36,7 @@
 	<link rel="stylesheet" href="css/responsive.css">
 	<script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 </head>
+
 <body>
 
 	<div id="tg-wrapper" class="tg-wrapper tg-haslayout">
@@ -40,11 +55,11 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="tg-innerbannercontent">
-							<h1>All Products</h1>
+							<h1>Thông tin chi tiết</h1>
 							<ol class="tg-breadcrumb">
-								<li><a href="#">home</a></li>
-								<li><a href="#">Products</a></li>
-								<li class="tg-active">Product Title Here</li>
+								<li><a href="index.php">Trang chủ</a></li>
+								<li><a href="products.php">Sản phẩm</a></li>
+
 							</ol>
 						</div>
 					</div>
@@ -68,79 +83,98 @@
 							<div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 pull-right">
 								<div id="tg-content" class="tg-content">
 									<div class="tg-featurebook alert" role="alert">
-											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<?php
+										$sql = "SELECT *FROM sach JOIN tacgia
+												ON sach.tg_id = tacgia.tg_id order by rand() limit 1";
+
+										$query = mysqli_query($conn, $sql);
+										while ($row = mysqli_fetch_assoc($query)) { ?>
 											<div class="tg-featureditm">
 												<div class="row">
 													<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 hidden-sm hidden-xs">
-														<figure><img src="images/img-04.png" alt="image description"></figure>
+														<figure><img style="width: 241px;height: 298px;" src="images/Image/VanHoc/<?php echo $row['anh']; ?>" alt="image description"></figure>
 													</div>
 													<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 														<div class="tg-featureditmcontent">
 															<div class="tg-themetagbox"><span class="tg-themetag">featured</span></div>
 															<div class="tg-booktitle">
-																<h3><a href="#">Things To Know About Green Flat Design</a></h3>
+																<h3><a href="productdetail.php?id=<?php echo $row['s_id']; ?>"><?php echo $row['s_ten']  ?></a></h3>
 															</div>
-															<span class="tg-bookwriter">By: <a href="#">Farrah Whisenhunt</a></span>
+															<span class="tg-bookwriter">Tác giả: <a href="#"><?php echo $row['tg_ten']  ?></a></span>
 															<span class="tg-stars"><span></span></span>
 															<div class="tg-priceandbtn">
 																<span class="tg-bookprice">
-																	<ins>$23.18</ins>
-																	<del>$30.20</del>
+																	<ins><?php echo number_format($row['s_gia']);  ?>vnđ</ins>
+																	<del><?php echo number_format($row['s_giamgia']);  ?>%</del>
 																</span>
 																<a class="tg-btn tg-btnstyletwo tg-active" href="#">
 																	<i class="fa fa-shopping-basket"></i>
-																	<em>Add To Basket</em>
+																	<em>Thêm giỏ hàng</em>
 																</a>
 															</div>
 														</div>
 													</div>
 												</div>
 											</div>
-										</div>
+										<?php }
+										?>
+									</div>
 									<div class="tg-productdetail">
 										<div class="row">
+											<?php
+											if (!isset($_GET['productdetail'])) {
+												$id = $_GET['id'];
+												$sql = "SELECT * from sach inner join tacgia on sach.tg_id=tacgia.tg_id INNER JOIN  theloai on theloai.tl_id=sach.tl_id  where s_id =$id ";
+												$query = mysqli_query($conn, $sql);
+												$row = mysqli_fetch_array($query);
+											}
+											?>
 											<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 												<div class="tg-postbook">
-													<figure class="tg-featureimg"><img src="images/books/img-07.jpg" alt="image description"></figure>
+													<div class="tg-frontcover"><img src="images/Image/VanHoc/<?php echo $row['anh']; ?>" alt="image description"></div>
 													<div class="tg-postbookcontent">
 														<span class="tg-bookprice">
-															<ins>$25.18</ins>
-															<del>$27.20</del>
+															<ins><?php echo number_format($row['s_gia']);  ?>vnđ</ins>
+															<del><?php echo number_format($row['s_giamgia']);  ?>%</del>
 														</span>
-														<span class="tg-bookwriter">You save $4.02</span>
+														<span class="tg-bookwriter">Giảm được : <?= number_format(($row['s_gia']) * ($row['s_giamgia']) / 100)	 ?> vnđ</span>
 														<ul class="tg-delevrystock">
-															<li><i class="icon-rocket"></i><span>Free delivery worldwide</span></li>
-															<li><i class="icon-checkmark-circle"></i><span>Dispatch from the USA in 2 working days </span></li>
-															<li><i class="icon-store"></i><span>Status: <em>In Stock</em></span></li>
+															<li><i class="icon-rocket"></i><span>Miễn Phí Vận Chuyển</span></li>
+
+															<li><i class="icon-store"></i><span>Trạng thái: <em>
+																		<?php if ($row['soluong'] > 0) {
+																			echo "Còn";
+																		} else {
+																			echo "Hết";
+																		} ?></em></span></li>
 														</ul>
 														<div class="tg-quantityholder">
 															<em class="minus">-</em>
 															<input type="text" class="result" value="0" id="quantity1" name="quantity">
 															<em class="plus">+</em>
 														</div>
-														<a class="tg-btn tg-active tg-btn-lg" href="#">Add To Basket</a>
-														<a class="tg-btnaddtowishlist" href="#">
-															<span>add to wishlist</span>
-														</a>
+														<a class="tg-btn tg-active tg-btn-lg" href="#">Thêm giỏ hàng</a>
+
 													</div>
 												</div>
 											</div>
 											<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 												<div class="tg-productcontent">
 													<ul class="tg-bookscategories">
-														<li><a href="#">Art &amp; Photography</a></li>
+														<li><a href="#"><?php echo $row['tl_ten']; ?></a></li>
 													</ul>
 													<div class="tg-themetagbox"><span class="tg-themetag">sale</span></div>
 													<div class="tg-booktitle">
-														<h3>Drive Safely, No Bumping</h3>
+														<h3><?php echo $row['s_ten'] ?></h3>
 													</div>
-													<span class="tg-bookwriter">By: <a href="#">Angela Gunning</a></span>
+													<span class="tg-bookwriter">Tác giả: <a href="#"><?php echo $row['tg_ten']; ?></a></span>
 													<span class="tg-stars"><span></span></span>
-													<span class="tg-addreviews"><a href="#">Add Your Review</a></span>
+
 													<div class="tg-share">
-														<span>Share:</span>
+														<span>Chia sẻ:</span>
 														<ul class="tg-socialicons">
 															<li class="tg-facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
 															<li class="tg-twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -150,376 +184,113 @@
 														</ul>
 													</div>
 													<div class="tg-description">
-														<p>Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore etdoloreat magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laborisi nisi ut aliquip ex ea commodo consequat aute.</p>
-														<p>Arure dolor in reprehenderit in voluptate velit esse cillum dolore fugiat nulla aetur excepteur sint occaecat cupidatat non proident, sunt in culpa quistan officia serunt mollit anim id est laborum sed ut perspiciatis unde omnis iste natus... <a href="#">More</a></p>
+														<p style="width: 517px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 20px;
+    -webkit-line-clamp: 5;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;	"><?php echo $row['mota'] ?></p>
+
 													</div>
 													<div class="tg-sectionhead">
-														<h2>Product Details</h2>
+														<h2>Thông tin chi tiết</h2>
 													</div>
 													<ul class="tg-productinfo">
-														<li><span>Format:</span><span>Hardback</span></li>
-														<li><span>Pages:</span><span>528 pages</span></li>
-														<li><span>Dimensions:</span><span>153 x 234 x 43mm | 758g</span></li>
-														<li><span>Publication Date:</span><span>June 27, 2017</span></li>
-														<li><span>Publisher:</span><span>Sunshine Orlando</span></li>
-														<li><span>Language:</span><span>English</span></li>
-														<li><span>Illustrations note:</span><span>b&amp;w images thru-out; 1 x 16pp colour plates</span></li>
-														<li><span>ISBN10:</span><span>1234567890</span></li>
-														<li><span>ISBN13:</span><span>1234567890000</span></li>
-														<li><span>Other Fomate:</span><span>CD-Audio, Paperback, E-Book</span></li>
+														<li><span>Lượt mua:</span><span><?= $row['luotmua']; ?></span></li>
+														<li><span>Số Trang:</span><span><?php echo $row['sotrang']; ?></span></li>
+														<li><span>Nhà xuất bản:</span><span><?php echo $row['nxb']; ?></span></li>
+														<li><span> Năm xuất bản:</span><span><?php echo $row['namxuatban']; ?></span></li>
+														<li><span>Tác giả:</span><span><?php echo $row['tg_ten']; ?></span></li>
+														<li><span>Ngôn ngữ:</span><span><?= $row['ngonngu']; ?></span></li>
 													</ul>
-													<div class="tg-alsoavailable">
-														<figure>
-															<img src="images/img-02.jpg" alt="image description">
-															<figcaption>
-																<h3>Also Available in:</h3>
-																<ul>
-																	<li><span>CD-Audio $18.30</span></li>
-																	<li><span>Paperback $20.10</span></li>
-																	<li><span>E-Book $11.30</span></li>
-																</ul>
-															</figcaption>
-														</figure>
-													</div>
 												</div>
 											</div>
 											<div class="tg-productdescription">
 												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 													<div class="tg-sectionhead">
-														<h2>Product Description</h2>
+														<h2>Lợi ích đọc sách</h2>
 													</div>
 													<ul class="tg-themetabs" role="tablist">
-														<li role="presentation" class="active"><a href="#description" data-toggle="tab">Description</a></li>
-														<li role="presentation"><a href="#review" data-toggle="tab">Reviews</a></li>
+														<li role="presentation" class="active"><a href="#description" data-toggle="tab">Lợi ích</a></li>
+
 													</ul>
 													<div class="tg-tab-content tab-content">
 														<div role="tabpanel" class="tg-tab-pane tab-pane active" id="description">
 															<div class="tg-description">
-																<p>Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veni quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenden
-voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+																<p>Đọc sách mang đến nhiều lợi ích bất ngờ mà bạn không hề biết đến. Đọc sách đúng cách giúp kích thích não bộ phát triển tốt hơn, hạn chế lão hóa và giảm khả năng mất trí nhớ. Ngoài ra, đọc sách cũng giúp con người ta nâng cao hiểu biết, làm giàu vốn từ, tăng khả năng tư duy, nhìn nhận vấn đề…</p>
 																<figure class="tg-alignleft">
 																	<img src="images/placeholdervtwo.jpg" alt="image description">
-																	<iframe src="https://www.youtube.com/embed/aLwpuDpZm1k?rel=0&amp;controls=0&amp;showinfo=0"></iframe>
+																	<iframe width="560" height="315" src="https://www.youtube.com/embed/TnWwDYbgweg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 																</figure>
 																<ul class="tg-liststyle">
-																	<li><span>Sed do eiusmod tempor incididunt ut labore et dolore</span></li>
-																	<li><span>Magna aliqua enim ad minim veniam</span></li>
-																	<li><span>Quis nostrud exercitation ullamco laboris nisi ut</span></li>
-																	<li><span>Aliquip ex ea commodo consequat aute dolor reprehenderit</span></li>
-																	<li><span>Voluptate velit esse cillum dolore eu fugiat nulla pariatur</span></li>
-																	<li><span>Magna aliqua enim ad minim veniam</span></li>
-																	<li><span>Quis nostrud exercitation ullamco laboris nisi ut</span></li>
+																	<li><span>Đọc sách giúp nâng cao hiểu biết</span></li>
+																	<li><span>Tăng cường kỹ năng tư duy, phân tích, tập trung</span></li>
+																	<li><span>Đọc sách giúp mở rộng vốn từ</span></li>
+																	<li><span>Đọc sách giúp rèn luyện trí nhớ</span></li>
+																	<li><span>Đọc sách giúp giảm căng thẳng</span></li>
+																	<li><span>Đọc sách giúp kéo dài tuổi thọ</span></li>
+																	<li><span>Cải thiện khả năng viết lách</span></li>
 																</ul>
-																<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam remmata aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enimsam
-voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos quistatoa.</p>
+																<p>Một trong những lợi ích của đọc sách khác là giúp người đọc xây dựng một lối sống lành mạnh. Bạn sẽ ít bị ảnh hưởng bởi các trò tiêu khiển độc hại, hạn chế tiếp xúc với các thiết bị điện tử như máy tính, điện thoại. Nhờ đọc sách bạn sẽ rèn được thói quen đi ngủ sớm, dậy sớm, tỉnh táo và sắp xếp thời gian biểu hợp lý hơn..</p>
 															</div>
 														</div>
-														<div role="tabpanel" class="tg-tab-pane tab-pane" id="review">
-															<div class="tg-description">
-																<p>Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veni quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenden
-voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-																<figure class="tg-alignleft">
-																	<img src="images/placeholdervtwo.jpg" alt="image description">
-																	<iframe src="https://www.youtube.com/embed/aLwpuDpZm1k?rel=0&amp;controls=0&amp;showinfo=0"></iframe>
-																</figure>
-																<ul class="tg-liststyle">
-																	<li><span>Sed do eiusmod tempor incididunt ut labore et dolore</span></li>
-																	<li><span>Magna aliqua enim ad minim veniam</span></li>
-																	<li><span>Quis nostrud exercitation ullamco laboris nisi ut</span></li>
-																	<li><span>Aliquip ex ea commodo consequat aute dolor reprehenderit</span></li>
-																	<li><span>Voluptate velit esse cillum dolore eu fugiat nulla pariatur</span></li>
-																	<li><span>Magna aliqua enim ad minim veniam</span></li>
-																	<li><span>Quis nostrud exercitation ullamco laboris nisi ut</span></li>
-																</ul>
-																<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam remmata aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enimsam
-voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos quistatoa.</p>
-															</div>
-														</div>
+
 													</div>
 												</div>
 											</div>
-											<div class="tg-aboutauthor">
-												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-													<div class="tg-sectionhead">
-														<h2>About Author</h2>
-													</div>
-													<div class="tg-authorbox">
-														<figure class="tg-authorimg">
-															<img src="images/author/imag-24.jpg" alt="image description">
-														</figure>
-														<div class="tg-authorinfo">
-															<div class="tg-authorhead">
-																<div class="tg-leftarea">
-																	<div class="tg-authorname">
-																		<h2>Kathrine Culbertson</h2>
-																		<span>Author Since: June 27, 2017</span>
-																	</div>
-																</div>
-																<div class="tg-rightarea">
-																	<ul class="tg-socialicons">
-																		<li class="tg-facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
-																		<li class="tg-twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
-																		<li class="tg-linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
-																		<li class="tg-googleplus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-																		<li class="tg-rss"><a href="#"><i class="fa fa-rss"></i></a></li>
-																	</ul>
-																</div>
-															</div>
-															<div class="tg-description">
-																<p>Laborum sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium totam rem aperiam eaque ipsa quae ab illo inventore veritatis etation.</p>
-															</div>
-															<a class="tg-btn tg-active" href="#">View All Books</a>
-														</div>
-													</div>
-												</div>
-											</div>
+
 											<div class="tg-relatedproducts">
 												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 													<div class="tg-sectionhead">
-														<h2><span>Related Products</span>You May Also Like</h2>
-														<a class="tg-btn" href="#">View All</a>
+														<h2>Sản phẩm tương tự</h2>
+
 													</div>
 												</div>
 												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 													<div id="tg-relatedproductslider" class="tg-relatedproductslider tg-relatedbooks owl-carousel">
-														<div class="item">
-															<div class="tg-postbook">
-																<figure class="tg-featureimg">
-																	<div class="tg-bookimg">
-																		<div class="tg-frontcover"><img src="images/books/img-01.jpg" alt="image description"></div>
-																		<div class="tg-backcover"><img src="images/books/img-01.jpg" alt="image description"></div>
+														<?php
+														$sql = "SELECT * from sach  INNER JOIN tacgia ON tacgia.tg_id = sach.tg_id
+													INNER JOIN theloai ON sach.tl_id = theloai.tl_id   order by rand() ";
+														$query = mysqli_query($conn, $sql);
+														while ($row = mysqli_fetch_assoc($query)) { ?>
+
+															<div class="item">
+																<div class="tg-postbook">
+																	<figure class="tg-featureimg">
+																		<div class="tg-bookimg">
+																			<div class="tg-frontcover"><img src="images/Image/VanHoc/<?php echo $row['anh']; ?>" alt="image description"></div>
+																			<div class="tg-backcover"><img src="images/Image/VanHoc/<?php echo $row['anh']; ?>" alt="image description"></div>
+																		</div>
+																		<a class="tg-btnaddtowishlist" href="productdetail.php?id=<?php echo $row['s_id']; ?>">
+																			<i class="icon-heart"></i>
+																			<span>Chi tiết</span>
+																		</a>
+																	</figure>
+																	<div class="tg-postbookcontent">
+																		<ul class="tg-bookscategories">
+																			<li><a href="productdetail.php?id=<?php echo $row['s_id']; ?>"><?php echo $row['tl_ten']; ?></a></li>
+																		</ul>
+																		<div class="tg-themetagbox"><span class="tg-themetag">sale</span></div>
+																		<div class="tg-booktitle" style="height:70px;">
+																			<h3><a href="productdetail.php?id=<?php echo $row['s_id']; ?>"><?php echo $row['s_ten']; ?></a></h3>
+																		</div>
+																		<span class="tg-bookwriter" style="margin-top: 38px;">Tác giả: <a href="#"><?php echo $row['tg_ten']; ?></a></span>
+																		<span class="tg-stars"><span></span></span>
+																		<span class="tg-bookprice">
+																			<ins><?php echo number_format($row['s_gia']);  ?>vnđ</ins>
+																			<del><?php echo number_format($row['s_giamgia']);  ?>%</del>
+																		</span>
+																		<a class="tg-btn tg-btnstyletwo" href="#">
+																			<i class="fa fa-shopping-basket"></i>
+																			<em>Thêm giỏ hàng</em>
+																		</a>
 																	</div>
-																	<a class="tg-btnaddtowishlist" href="#">
-																		<i class="icon-heart"></i>
-																		<span>add to wishlist</span>
-																	</a>
-																</figure>
-																<div class="tg-postbookcontent">
-																	<ul class="tg-bookscategories">
-																		<li><a href="#">Adventure</a></li>
-																		<li><a href="#">Fun</a></li>
-																	</ul>
-																	<div class="tg-themetagbox"><span class="tg-themetag">sale</span></div>
-																	<div class="tg-booktitle">
-																		<h3><a href="#">Help Me Find My Stomach</a></h3>
-																	</div>
-																	<span class="tg-bookwriter">By: <a href="#">Angela Gunning</a></span>
-																	<span class="tg-stars"><span></span></span>
-																	<span class="tg-bookprice">
-																		<ins>$25.18</ins>
-																		<del>$27.20</del>
-																	</span>
-																	<a class="tg-btn tg-btnstyletwo" href="#">
-																		<i class="fa fa-shopping-basket"></i>
-																		<em>Add To Basket</em>
-																	</a>
 																</div>
 															</div>
-														</div>
-														<div class="item">
-															<div class="tg-postbook">
-																<figure class="tg-featureimg">
-																	<div class="tg-bookimg">
-																		<div class="tg-frontcover"><img src="images/books/img-02.jpg" alt="image description"></div>
-																		<div class="tg-backcover"><img src="images/books/img-02.jpg" alt="image description"></div>
-																	</div>
-																	<a class="tg-btnaddtowishlist" href="#">
-																		<i class="icon-heart"></i>
-																		<span>add to wishlist</span>
-																	</a>
-																</figure>
-																<div class="tg-postbookcontent">
-																	<ul class="tg-bookscategories">
-																		<li><a href="#">Adventure</a></li>
-																		<li><a href="#">Fun</a></li>
-																	</ul>
-																	<div class="tg-themetagbox"><span class="tg-themetag">sale</span></div>
-																	<div class="tg-booktitle">
-																		<h3><a href="#">Drive Safely, No Bumping</a></h3>
-																	</div>
-																	<span class="tg-bookwriter">By: <a href="#">Angela Gunning</a></span>
-																	<span class="tg-stars"><span></span></span>
-																	<span class="tg-bookprice">
-																		<ins>$25.18</ins>
-																		<del>$27.20</del>
-																	</span>
-																	<a class="tg-btn tg-btnstyletwo" href="#">
-																		<i class="fa fa-shopping-basket"></i>
-																		<em>Add To Basket</em>
-																	</a>
-																</div>
-															</div>
-														</div>
-														<div class="item">
-															<div class="tg-postbook">
-																<figure class="tg-featureimg">
-																	<div class="tg-bookimg">
-																		<div class="tg-frontcover"><img src="images/books/img-03.jpg" alt="image description"></div>
-																		<div class="tg-backcover"><img src="images/books/img-03.jpg" alt="image description"></div>
-																	</div>
-																	<a class="tg-btnaddtowishlist" href="#">
-																		<i class="icon-heart"></i>
-																		<span>add to wishlist</span>
-																	</a>
-																</figure>
-																<div class="tg-postbookcontent">
-																	<ul class="tg-bookscategories">
-																		<li><a href="#">Adventure</a></li>
-																		<li><a href="#">Fun</a></li>
-																	</ul>
-																	<div class="tg-themetagbox"></div>
-																	<div class="tg-booktitle">
-																		<h3><a href="#">Let The Good Times Roll Up</a></h3>
-																	</div>
-																	<span class="tg-bookwriter">By: <a href="#">Angela Gunning</a></span>
-																	<span class="tg-stars"><span></span></span>
-																	<span class="tg-bookprice">
-																		<ins>$25.18</ins>
-																		<del>$27.20</del>
-																	</span>
-																	<a class="tg-btn tg-btnstyletwo" href="#">
-																		<i class="fa fa-shopping-basket"></i>
-																		<em>Add To Basket</em>
-																	</a>
-																</div>
-															</div>
-														</div>
-														<div class="item">
-															<div class="tg-postbook">
-																<figure class="tg-featureimg">
-																	<div class="tg-bookimg">
-																		<div class="tg-frontcover"><img src="images/books/img-04.jpg" alt="image description"></div>
-																		<div class="tg-backcover"><img src="images/books/img-04.jpg" alt="image description"></div>
-																	</div>
-																	<a class="tg-btnaddtowishlist" href="#">
-																		<i class="icon-heart"></i>
-																		<span>add to wishlist</span>
-																	</a>
-																</figure>
-																<div class="tg-postbookcontent">
-																	<ul class="tg-bookscategories">
-																		<li><a href="#">Adventure</a></li>
-																		<li><a href="#">Fun</a></li>
-																	</ul>
-																	<div class="tg-themetagbox"><span class="tg-themetag">sale</span></div>
-																	<div class="tg-booktitle">
-																		<h3><a href="#">Our State Fair Is A Great State Fair</a></h3>
-																	</div>
-																	<span class="tg-bookwriter">By: <a href="#">Angela Gunning</a></span>
-																	<span class="tg-stars"><span></span></span>
-																	<span class="tg-bookprice">
-																		<ins>$25.18</ins>
-																		<del>$27.20</del>
-																	</span>
-																	<a class="tg-btn tg-btnstyletwo" href="#">
-																		<i class="fa fa-shopping-basket"></i>
-																		<em>Add To Basket</em>
-																	</a>
-																</div>
-															</div>
-														</div>
-														<div class="item">
-															<div class="tg-postbook">
-																<figure class="tg-featureimg">
-																	<div class="tg-bookimg">
-																		<div class="tg-frontcover"><img src="images/books/img-05.jpg" alt="image description"></div>
-																		<div class="tg-backcover"><img src="images/books/img-05.jpg" alt="image description"></div>
-																	</div>
-																	<a class="tg-btnaddtowishlist" href="#">
-																		<i class="icon-heart"></i>
-																		<span>add to wishlist</span>
-																	</a>
-																</figure>
-																<div class="tg-postbookcontent">
-																	<ul class="tg-bookscategories">
-																		<li><a href="#">Adventure</a></li>
-																		<li><a href="#">Fun</a></li>
-																	</ul>
-																	<div class="tg-themetagbox"></div>
-																	<div class="tg-booktitle">
-																		<h3><a href="#">Put The Petal To The Metal</a></h3>
-																	</div>
-																	<span class="tg-bookwriter">By: <a href="#">Angela Gunning</a></span>
-																	<span class="tg-stars"><span></span></span>
-																	<span class="tg-bookprice">
-																		<ins>$25.18</ins>
-																		<del>$27.20</del>
-																	</span>
-																	<a class="tg-btn tg-btnstyletwo" href="#">
-																		<i class="fa fa-shopping-basket"></i>
-																		<em>Add To Basket</em>
-																	</a>
-																</div>
-															</div>
-														</div>
-														<div class="item">
-															<div class="tg-postbook">
-																<figure class="tg-featureimg">
-																	<div class="tg-bookimg">
-																		<div class="tg-frontcover"><img src="images/books/img-06.jpg" alt="image description"></div>
-																		<div class="tg-backcover"><img src="images/books/img-06.jpg" alt="image description"></div>
-																	</div>
-																	<a class="tg-btnaddtowishlist" href="#">
-																		<i class="icon-heart"></i>
-																		<span>add to wishlist</span>
-																	</a>
-																</figure>
-																<div class="tg-postbookcontent">
-																	<ul class="tg-bookscategories">
-																		<li><a href="#">Adventure</a></li>
-																		<li><a href="#">Fun</a></li>
-																	</ul>
-																	<div class="tg-themetagbox"><span class="tg-themetag">sale</span></div>
-																	<div class="tg-booktitle">
-																		<h3><a href="#">Help Me Find My Stomach</a></h3>
-																	</div>
-																	<span class="tg-bookwriter">By: <a href="#">Angela Gunning</a></span>
-																	<span class="tg-stars"><span></span></span>
-																	<span class="tg-bookprice">
-																		<ins>$25.18</ins>
-																		<del>$27.20</del>
-																	</span>
-																	<a class="tg-btn tg-btnstyletwo" href="#">
-																		<i class="fa fa-shopping-basket"></i>
-																		<em>Add To Basket</em>
-																	</a>
-																</div>
-															</div>
-														</div>
-														<div class="item">
-															<div class="tg-postbook">
-																<figure class="tg-featureimg">
-																	<div class="tg-bookimg">
-																		<div class="tg-frontcover"><img src="images/books/img-03.jpg" alt="image description"></div>
-																		<div class="tg-backcover"><img src="images/books/img-03.jpg" alt="image description"></div>
-																	</div>
-																	<a class="tg-btnaddtowishlist" href="#">
-																		<i class="icon-heart"></i>
-																		<span>add to wishlist</span>
-																	</a>
-																</figure>
-																<div class="tg-postbookcontent">
-																	<ul class="tg-bookscategories">
-																		<li><a href="#">Adventure</a></li>
-																		<li><a href="#">Fun</a></li>
-																	</ul>
-																	<div class="tg-themetagbox"></div>
-																	<div class="tg-booktitle">
-																		<h3><a href="#">Let The Good Times Roll Up</a></h3>
-																	</div>
-																	<span class="tg-bookwriter">By: <a href="#">Angela Gunning</a></span>
-																	<span class="tg-stars"><span></span></span>
-																	<span class="tg-bookprice">
-																		<ins>$25.18</ins>
-																		<del>$27.20</del>
-																	</span>
-																	<a class="tg-btn tg-btnstyletwo" href="#">
-																		<i class="fa fa-shopping-basket"></i>
-																		<em>Add To Basket</em>
-																	</a>
-																</div>
-															</div>
-														</div>
+
+														<?php }
+														?>
 													</div>
 												</div>
 											</div>
@@ -529,153 +300,61 @@ voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntu
 							</div>
 							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 pull-left">
 								<aside id="tg-sidebar" class="tg-sidebar">
-									<div class="tg-widget tg-widgetsearch">
-										<form class="tg-formtheme tg-formsearch">
-											<div class="form-group">
-												<button type="submit"><i class="icon-magnifier"></i></button>
-												<input type="search" name="search" class="form-group" placeholder="Search by title, author, key...">
-											</div>
-										</form>
-									</div>
+									
 									<div class="tg-widget tg-catagories">
 										<div class="tg-widgettitle">
-											<h3>Categories</h3>
+											<h3>Thể loại</h3>
 										</div>
-										<div class="tg-widgetcontent">
-											<ul>
-												<li><a href="#"><span>Art &amp; Photography</span><em>28245</em></a></li>
-												<li><a href="#"><span>Biography</span><em>4856</em></a></li>
-												<li><a href="#"><span>Children’s Book</span><em>8654</em></a></li>
-												<li><a href="#"><span>Craft &amp; Hobbies</span><em>6247</em></a></li>
-												<li><a href="#"><span>Crime &amp; Thriller</span><em>888654</em></a></li>
-												<li><a href="#"><span>Fantasy &amp; Horror</span><em>873144</em></a></li>
-												<li><a href="#"><span>Fiction</span><em>18465</em></a></li>
-												<li><a href="#"><span>Fod &amp; Drink</span><em>3148</em></a></li>
-												<li><a href="#"><span>Graphic, Anime &amp; Manga</span><em>77531</em></a></li>
-												<li><a href="#"><span>Science Fiction</span><em>9247</em></a></li>
-												<li><a href="#"><span>View All</span></a></li>
-											</ul>
+										<div class="tg-widgetcontent"  id="detail_product">
+											
+											<?php
+											include "database/connect.php";
+											$sql = "SELECT theloai.tl_id, theloai.tl_ten, COUNT(sach.tl_id) as tongsosach 
+											FROM theloai 
+											LEFT JOIN sach ON sach.tl_id = theloai.tl_id 
+											GROUP BY theloai.tl_id, theloai.tl_ten";
+											$query = mysqli_query($conn, $sql);
+											while ($row = mysqli_fetch_assoc($query)) { ?>
+												<ul>
+													<li data-value="<?php echo $row['tl_id'] ?>"><a href="#"><span><?php echo $row['tl_ten'] ?></span><em><?php echo $row['tongsosach'] ?></em></a></li>
+												</ul>
+											<?php }
+											?>
 										</div>
 									</div>
 									<div class="tg-widget tg-widgettrending">
 										<div class="tg-widgettitle">
-											<h3>Trending Products</h3>
+											<h3>Được xem nhiều nhất</h3>
 										</div>
 										<div class="tg-widgetcontent">
 											<ul>
-												<li>
-													<article class="tg-post">
-														<figure><a href="#"><img src="images/products/img-04.jpg" alt="image description"></a></figure>
-														<div class="tg-postcontent">
-															<div class="tg-posttitle">
-																<h3><a href="#">Where The Wild Things Are</a></h3>
+												<?php
+												$sql = "SELECT *
+												FROM sach
+												JOIN tacgia
+												ON sach.tg_id = tacgia.tg_id order by rand() limit 8";
+												$query = mysqli_query($conn, $sql);
+												while ($row = mysqli_fetch_assoc($query)) { ?>
+													<li>
+														<article class="tg-post">
+															<figure><a href="#" style="width: 95px;height: 95px;"><img src="images/Image/VanHoc/<?php echo $row['anh']; ?>" alt="image description"></a></figure>
+															<div class="tg-postcontent">
+																<div class="tg-posttitle">
+																	<h3><a href="productdetail.php?id=<?php echo $row['s_id']; ?>"><?php echo $row['s_ten']; ?></a></h3>
+																</div>
+																<span class="tg-bookwriter">Bởi: <a href="productdetail.php?id=<?php echo $row['s_id']; ?>"><?php echo $row['tg_ten'] ?></a></span>
 															</div>
-															<span class="tg-bookwriter">By: <a href="#">Kathrine Culbertson</a></span>
-														</div>
-													</article>
-												</li>
-												<li>
-													<article class="tg-post">
-														<figure><a href="#"><img src="images/products/img-05.jpg" alt="image description"></a></figure>
-														<div class="tg-postcontent">
-															<div class="tg-posttitle">
-																<h3><a href="#">Where The Wild Things Are</a></h3>
-															</div>
-															<span class="tg-bookwriter">By: <a href="#">Kathrine Culbertson</a></span>
-														</div>
-													</article>
-												</li>
-												<li>
-													<article class="tg-post">
-														<figure><a href="#"><img src="images/products/img-06.jpg" alt="image description"></a></figure>
-														<div class="tg-postcontent">
-															<div class="tg-posttitle">
-																<h3><a href="#">Where The Wild Things Are</a></h3>
-															</div>
-															<span class="tg-bookwriter">By: <a href="#">Kathrine Culbertson</a></span>
-														</div>
-													</article>
-												</li>
-												<li>
-													<article class="tg-post">
-														<figure><a href="#"><img src="images/products/img-07.jpg" alt="image description"></a></figure>
-														<div class="tg-postcontent">
-															<div class="tg-posttitle">
-																<h3><a href="#">Where The Wild Things Are</a></h3>
-															</div>
-															<span class="tg-bookwriter">By: <a href="#">Kathrine Culbertson</a></span>
-														</div>
-													</article>
-												</li>
-											</ul>
-										</div>
-									</div>
-									<div class="tg-widget tg-widgetinstagram">
-										<div class="tg-widgettitle">
-											<h3>Instagram</h3>
-										</div>
-										<div class="tg-widgetcontent">
-											<ul>
-												<li>
-													<figure>
-														<img src="images/instagram/img-01.jpg" alt="image description">
-														<figcaption><a href="#"><i class="icon-heart"></i><em>50,134</em></a></figcaption>
-													</figure>
-												</li>
-												<li>
-													<figure>
-														<img src="images/instagram/img-02.jpg" alt="image description">
-														<figcaption><a href="#"><i class="icon-heart"></i><em>50,134</em></a></figcaption>
-													</figure>
-												</li>
-												<li>
-													<figure>
-														<img src="images/instagram/img-03.jpg" alt="image description">
-														<figcaption><a href="#"><i class="icon-heart"></i><em>50,134</em></a></figcaption>
-													</figure>
-												</li>
-												<li>
-													<figure>
-														<img src="images/instagram/img-04.jpg" alt="image description">
-														<figcaption><a href="#"><i class="icon-heart"></i><em>50,134</em></a></figcaption>
-													</figure>
-												</li>
-												<li>
-													<figure>
-														<img src="images/instagram/img-05.jpg" alt="image description">
-														<figcaption><a href="#"><i class="icon-heart"></i><em>50,134</em></a></figcaption>
-													</figure>
-												</li>
-												<li>
-													<figure>
-														<img src="images/instagram/img-06.jpg" alt="image description">
-														<figcaption><a href="#"><i class="icon-heart"></i><em>50,134</em></a></figcaption>
-													</figure>
-												</li>
-												<li>
-													<figure>
-														<img src="images/instagram/img-07.jpg" alt="image description">
-														<figcaption><a href="#"><i class="icon-heart"></i><em>50,134</em></a></figcaption>
-													</figure>
-												</li>
-												<li>
-													<figure>
-														<img src="images/instagram/img-08.jpg" alt="image description">
-														<figcaption><a href="#"><i class="icon-heart"></i><em>50,134</em></a></figcaption>
-													</figure>
-												</li>
-												<li>
-													<figure>
-														<img src="images/instagram/img-09.jpg" alt="image description">
-														<figcaption><a href="#"><i class="icon-heart"></i><em>50,134</em></a></figcaption>
-													</figure>
-												</li>
+														</article>
+													</li>
+												<?php }
+												?>
+
 											</ul>
 										</div>
 									</div>
 									<div class="tg-widget tg-widgetblogers">
 										<div class="tg-widgettitle">
-											<h3>Top Bloogers</h3>
+											<h3>Tác giả nổi tiếng </h3>
 										</div>
 										<div class="tg-widgetcontent">
 											<ul>
@@ -754,6 +433,7 @@ voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntu
 	<script src="js/appear.js"></script>
 	<script src="js/gmap3.js"></script>
 	<script src="js/main.js"></script>
+	<script src="js/search.js"></script>
 </body>
 
 </html>

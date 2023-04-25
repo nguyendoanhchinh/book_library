@@ -7,29 +7,29 @@
                                 <li class="tg-devlivery">
                                     <span class="tg-clientserviceicon"><i class="icon-rocket"></i></span>
                                     <div class="tg-titlesubtitle">
-                                        <h3>Fast Delivery</h3>
-                                        <p>Shipping Worldwide</p>
+                                        <h3>Chuyển phát nhanh</h3>
+
                                     </div>
                                 </li>
                                 <li class="tg-discount">
                                     <span class="tg-clientserviceicon"><i class="icon-tag"></i></span>
                                     <div class="tg-titlesubtitle">
-                                        <h3>Open Discount</h3>
-                                        <p>Offering Open Discount</p>
+                                        <h3>Giảm giá bán hàng</h3>
+                                        
                                     </div>
                                 </li>
                                 <li class="tg-quality">
                                     <span class="tg-clientserviceicon"><i class="icon-leaf"></i></span>
                                     <div class="tg-titlesubtitle">
-                                        <h3>Eyes On Quality</h3>
-                                        <p>Publishing Quality Work</p>
+                                        <h3>Chú ý đến chất lượng</h3>
+                                       
                                     </div>
                                 </li>
                                 <li class="tg-support">
                                     <span class="tg-clientserviceicon"><i class="icon-heart"></i></span>
                                     <div class="tg-titlesubtitle">
-                                        <h3>24/7 Support</h3>
-                                        <p>Serving Every Moments</p>
+                                        <h3>Hỗ trợ phục vụ 24/7 </h3>
+                                       
                                     </div>
                                 </li>
                             </ul>
@@ -41,18 +41,18 @@
                                     <ul class="tg-contactinfo">
                                         <li>
                                             <i class="icon-apartment"></i>
-                                            <address>Suit # 07, Rose world Building, Street # 02, AT246T Manchester</address>
+                                            <address>Hà Nội</address>
                                         </li>
                                         <li>
                                             <i class="icon-phone-handset"></i>
                                             <span>
-												<em>0800 12345 - 678 - 89</em>
-												<em>+4 1234 - 4567 - 67</em>
+												<em>+84 12345 - 678 - 89</em>
+												<em>+84 1234 - 4567 - 67</em>
 											</span>
                                         </li>
                                         <li>
                                             <i class="icon-clock"></i>
-                                            <span>Serving 7 Days A Week From 9am - 5pm</span>
+                                            <span>Phục Vụ 7 Ngày Trong Tuần Từ 9am - 5pm</span>
                                         </li>
                                         <li>
                                             <i class="icon-envelope"></i>
@@ -74,7 +74,7 @@
                             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="tg-footercol tg-widget tg-widgetnavigation">
                                     <div class="tg-widgettitle">
-                                        <h3>Shipping And Help Information</h3>
+                                        <h3>Thông tin vận chuyển</h3>
                                     </div>
                                     <div class="tg-widgetcontent">
                                         <ul>
@@ -100,7 +100,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="tg-footercol tg-widget tg-widgettopsellingauthors">
                                     <div class="tg-widgettitle">
-                                        <h3>Top Selling Authors</h3>
+                                        <h3>Tác giả nổi tiếng thế giới</h3>
                                     </div>
                                     <div class="tg-widgetcontent">
                                         <ul>
@@ -139,33 +139,5 @@
                     </div>
                 </div>
             </div>
-            <div class="tg-newsletter">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <h4>Signup Newsletter!</h4>
-                            <h5>Consectetur adipisicing elit sed do eiusmod tempor incididunt.</h5>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <form class="tg-formtheme tg-formnewsletter">
-                                <fieldset>
-                                    <input type="email" name="email" class="form-control" placeholder="Enter Your Email ID">
-                                    <button type="button"><i class="icon-envelope"></i></button>
-                                </fieldset>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tg-footerbar">
-                <a id="tg-btnbacktotop" class="tg-btnbacktotop" href="javascript:void(0);"><i class="icon-chevron-up"></i></a>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <span class="tg-paymenttype"><img src="images/paymenticon.png" alt="image description"></span>
-                            <span class="tg-copyright">2017 All Rights Reserved By &copy; Book Library</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </footer>

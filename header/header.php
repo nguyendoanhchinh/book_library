@@ -31,7 +31,7 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <strong class="tg-logo"><a href="index.php"><img src="images/logo.png" alt="company name here"></a></strong>
                             <div class="tg-wishlistandcart">
-                                <div class="dropdown tg-themedropdown tg-wishlistdropdown">
+                                <!-- <div class="dropdown tg-themedropdown tg-wishlistdropdown">
                                     <a href="#" id="tg-wishlisst" class="tg-btnthemedropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="tg-themebadge">3</span>
                                         <i class="icon-heart"></i>
@@ -42,12 +42,12 @@
                                             <p>No products were added to the wishlist!</p>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="dropdown tg-themedropdown tg-minicartdropdown">
                                     <a href="#" id="tg-minicart" class="tg-btnthemedropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="tg-themebadge">3</span>
                                         <i class="icon-cart"></i>
-                                        <span>$123.00</span>
+                                        <span>Giỏ hàng</span>
                                     </a>
                                     <div class="dropdown-menu tg-themedropdownmenu" aria-labelledby="tg-minicart">
                                         <div class="tg-minicartbody">
@@ -99,10 +99,9 @@
                             <div class="tg-searchbox">
                                 <form class="tg-formtheme tg-formsearch">
                                     <fieldset>
-                                        <input type="text" name="search" class="typeahead form-control" placeholder="Search by title, author, keyword, ISBN...">
-                                        <button type="submit"><i class="icon-magnifier"></i></button>
+                                        <input type="text" name="search" id="inputsearch" class="typeahead form-control" placeholder="Tìm kiếm sách..">
+                                        <button type="input" id="search_btn"><i class="icon-magnifier"></i></button>
                                     </fieldset>
-                                    
                                 </form>
                             </div>
                         </div>
@@ -125,36 +124,30 @@
                                 <div id="tg-navigation" class="collapse navbar-collapse tg-navigation">
                                     <ul>
                                         
-                                        <li class="menu-item-has-children current-menu-item">
-                                            <a href="index.php">Home</a>
+                                        <li class="menu-item-has-children current-menu-item" style="margin-right: 50px;">
+                                            <a href="index.php" >Trang Chủ</a>
                                             
                                         </li>
-                                        <li class="menu-item-has-children">
-                                                    <a href="aboutus.php">Products</a>
+                                        <li class="menu-item-has-children" style="margin-right: 50px;">
+                                                    <a href="products.php">Sản Phẩm</a>
                                                     <ul class="sub-menu">
-                                                        <li><a href="products.php">Products</a></li>
-                                                        <li><a href="productdetail.php">Product Detail</a></li>
+                                                        <li><a href="products.php">Các sản phẩm</a></li>
+                                                        <li><a href="productdetail.php">Chi tiết sản phẩm</a></li>
                                                     </ul>
                                                 </li>
-                                        <li class="menu-item-has-children">
-                                            <a href="#">Authors</a>
+                                        <li class="menu-item-has-children" style="margin-right: 50px;">
+                                            <a href="#">Tác giả</a>
                                             <ul class="sub-menu">
-                                                <li><a href="authors.php">Authors</a></li>
-                                                <li><a href="authordetail.php">Author Detail</a></li>
+                                                <li><a href="authors.php">Các Tác giả</a></li>
+                                                <li><a href="authordetail.php">Chi tiết tác giả</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="products.php">Best Selling</a></li>
-                                        <li><a href="products.php">Weekly Sale</a></li>
+                                      
                                         
-                                        <li><a href="contactus.php">Contact</a></li>
-                                        <li class="menu-item-has-children current-menu-item">
-                                            <a href="#"><i class="icon-menu"></i></a>
-                                            <ul class="sub-menu">
-                                                
-                                                <li><a href="aboutus.php">About Us</a></li>
-                                                <li><a href="404error.php">404 Error</a></li>
-                                              
-                                            </ul>
+                                        
+                                        <li><a href="contactus.php" style="margin-right: 50px;">Liên hệ</a></li>
+                                        <li class="menu-item-has-children current-menu-item" style="margin-right: 50px;">   
+                                                <li><a href="aboutus.php">Về chúng tôi</a></li> 
                                         </li>
                                     </ul>
                                 </div>

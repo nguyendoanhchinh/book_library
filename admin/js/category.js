@@ -75,9 +75,10 @@ $(document).on('click', '#deletecategory', function() {
             action: action,
         },
         success: function(data) {
+            location.reload()
+            loadCategory()
             alert(data)
-            Location.reload()
-            loadAuthor()
+
 
         }
     })
